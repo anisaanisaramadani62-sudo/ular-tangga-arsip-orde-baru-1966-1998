@@ -1,0 +1,2046 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ular Tangga: Arsip Orde Baru (1966 - 1998)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Playfair Display & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fcf8f2;
+            background-image: radial-gradient(#e5d5bc 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .retro-title {
+            font-family: 'Playfair Display', serif;
+        }
+        .parchment {
+            background: linear-gradient(135deg, #fefbf6 0%, #f4ebd0 100%);
+            border: 3px solid #4a3525;
+            box-shadow: 6px 6px 0px #4a3525;
+        }
+        .parchment-crisis {
+            background: linear-gradient(135deg, #fff5f5 0%, #fee2e2 100%);
+            border: 3px solid #7f1d1d;
+            box-shadow: 6px 6px 0px #7f1d1d;
+        }
+        .parchment-card {
+            background: #fffdf9;
+            border: 2px solid #5c4033;
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1ebd9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #8c6d53;
+            border-radius: 3px;
+        }
+        @keyframes pulse-token {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.18); }
+        }
+        .active-token {
+            animation: pulse-token 1.2s infinite ease-in-out;
+        }
+        .tile-terracotta {
+            background-color: #D96B52;
+            color: #fffbf2;
+        }
+        .tile-cream {
+            background-color: #F7F1E1;
+            color: #3d2817;
+        }
+        #board-svg-overlay {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 12;
+            opacity: 0.94;
+            filter: drop-shadow(1px 2px 2px rgba(35, 20, 10, 0.3));
+        }
+        @keyframes target-glow {
+            0%, 100% { box-shadow: inset 0 0 0 3px #fbbf24, 0 0 14px #fbbf24; }
+            50% { box-shadow: inset 0 0 0 4px #f59e0b, 0 0 22px #fef08a; }
+        }
+        .tile-highlight-target {
+            animation: target-glow 0.55s infinite ease-in-out;
+            z-index: 11;
+        }
+        .pawn-gliding {
+            transform: scale(1.28) !important;
+            box-shadow: 0 10px 18px rgba(0, 0, 0, 0.45), 0 0 0 3px #fde047 !important;
+            z-index: 40 !important;
+            transition: none !important;
+        }
+        @keyframes dice-shake {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-14deg) scale(1.1); }
+            50% { transform: rotate(14deg) scale(1.1); }
+            75% { transform: rotate(-8deg) scale(1.05); }
+        }
+        .dice-rolling {
+            animation: dice-shake 0.35s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="text-stone-900 min-h-screen flex flex-col items-center justify-between p-3 md:p-6">
+
+    <!-- Header -->
+    <header class="w-full max-w-6xl text-center mb-5 relative">
+        <div class="inline-block bg-[#4a3525] text-amber-100 px-4 py-1 rounded-sm text-xs md:text-sm font-semibold tracking-widest uppercase mb-1.5 shadow">
+            Edisi Papan Klasik &bull; Sejarah Indonesia 1966 – 1998
+        </div>
+        <h1 class="retro-title text-3xl md:text-5xl font-extrabold text-[#3d2817] tracking-tight">
+            Ular Tangga: Arsip Orde Baru
+        </h1>
+        <p class="text-stone-700 text-xs md:text-base mt-1 max-w-2xl mx-auto">
+            Susuri tangga pembangunan, hadapi tantangan soal sulit untuk bertahan dari gigitan ular krisis, dan uji wawasan sejarah dalam 3 tingkat kesulitan!
+        </p>
+        <div class="mt-3 flex flex-wrap items-center justify-center gap-2.5">
+            <button type="button" onclick="openQuestionBankModal()" class="inline-flex items-center gap-1.5 bg-[#8c2d19] hover:bg-[#6e2111] text-amber-50 border-2 border-[#3d2817] px-3.5 py-1.5 rounded text-xs md:text-sm font-bold shadow-xs transition cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                <span>Bank Soal (<span id="bank-count-badge">30</span>)</span>
+            </button>
+            <div id="header-reset-wrap" class="hidden">
+                <button type="button" onclick="openSetupScreen()" class="inline-flex items-center gap-1.5 bg-[#f4ebd0] hover:bg-amber-200 text-[#3d2817] border-2 border-[#5c4033] px-3.5 py-1.5 rounded text-xs md:text-sm font-bold shadow-xs transition cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    <span>Ganti Pemain / Reset Permainan</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="w-full max-w-6xl flex-grow flex flex-col lg:flex-row gap-6 items-start justify-center">
+        
+        <!-- SETUP SCREEN -->
+        <div id="setup-screen" class="w-full max-w-xl mx-auto parchment p-6 md:p-8 rounded-lg shadow-xl relative z-30">
+            <h2 class="retro-title text-2xl md:text-3xl font-bold text-[#3d2817] mb-3 text-center border-b-2 border-[#8c6d53] pb-3">
+                Persiapan Permainan
+            </h2>
+            <p class="text-stone-700 text-sm mb-5 text-center">
+                Pilih jumlah pemain (1 hingga 4 orang) dan ketik nama masing-masing peserta.
+            </p>
+
+            <div class="mb-5">
+                <label class="block text-sm font-bold text-stone-800 mb-2">Jumlah Pemain:</label>
+                <div class="grid grid-cols-4 gap-2.5" id="player-count-buttons">
+                    <button type="button" onclick="setPlayerCount(1)" class="player-count-btn py-2.5 rounded font-bold border-2 border-[#5c4033] bg-amber-200 text-stone-900 transition hover:bg-amber-300 shadow-sm text-xs md:text-sm cursor-pointer" data-count="1">1 Pemain</button>
+                    <button type="button" onclick="setPlayerCount(2)" class="player-count-btn py-2.5 rounded font-bold border-2 border-[#5c4033] bg-white text-stone-900 transition hover:bg-amber-100 shadow-sm text-xs md:text-sm cursor-pointer" data-count="2">2 Pemain</button>
+                    <button type="button" onclick="setPlayerCount(3)" class="player-count-btn py-2.5 rounded font-bold border-2 border-[#5c4033] bg-white text-stone-900 transition hover:bg-amber-100 shadow-sm text-xs md:text-sm cursor-pointer" data-count="3">3 Pemain</button>
+                    <button type="button" onclick="setPlayerCount(4)" class="player-count-btn py-2.5 rounded font-bold border-2 border-[#5c4033] bg-white text-stone-900 transition hover:bg-amber-100 shadow-sm text-xs md:text-sm cursor-pointer" data-count="4">4 Pemain</button>
+                </div>
+            </div>
+
+            <!-- Solo Bot Option -->
+            <div id="bot-option-container" class="mb-5 p-3 bg-amber-100/80 border border-amber-400 rounded flex items-center justify-between">
+                <div>
+                    <span class="text-sm font-bold text-stone-800 block">Lawan Komputer (Sejarawan AI)</span>
+                    <span class="text-xs text-stone-600">Dalam mode 1 pemain, Anda otomatis bertanding melawan Sejarawan AI.</span>
+                </div>
+                <span class="px-2.5 py-1 bg-[#4a3525] text-amber-100 text-xs font-bold rounded">Aktif</span>
+            </div>
+
+            <div id="player-inputs" class="space-y-3 mb-6">
+                <!-- Dynamic player name inputs injected here -->
+            </div>
+
+            <!-- Rules Quick Highlight -->
+            <div class="mb-5 p-3 bg-amber-50 border border-[#8c6d53] rounded text-xs text-stone-700 space-y-1">
+                <div class="font-bold text-[#3d2817] uppercase tracking-wide">Aturan Khusus Tantangan Sejarah:</div>
+                <div>📖 <strong>Petak Soal:</strong> Pilih tingkat kesulitan — <strong>Mudah (±2 petak)</strong>, <strong>Sedang (±4 petak)</strong>, atau <strong>Sulit (±6 petak)</strong>.</div>
+                <div>🐍 <strong>Kepala Ular:</strong> Jawab <strong>1 Soal Sulit (HOTS)</strong> untuk bertahan! Jika salah, pion meluncur turun ke ekor ular.</div>
+            </div>
+
+            <button type="button" onclick="startGame()" class="w-full bg-[#8c6d53] hover:bg-[#725741] text-amber-50 font-bold py-3.5 px-6 rounded border-2 border-[#4a3525] shadow-md transition transform active:scale-95 text-lg flex items-center justify-center gap-2 cursor-pointer">
+                <span>Mulai Permainan</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
+        </div>
+
+        <!-- GAMEPLAY SCREEN (Hidden initially) -->
+        <div id="game-screen" class="w-full hidden flex flex-col lg:flex-row gap-6 items-start justify-center">
+            
+            <!-- LEFT / BOARD AREA -->
+            <div class="w-full lg:w-2/3 flex flex-col items-center">
+                <div class="parchment p-2.5 md:p-4 rounded-lg w-full relative shadow-2xl flex flex-col items-center">
+                    <div class="w-full max-w-[620px] bg-[#8c2d19] text-[#fefbf6] border-2 border-[#3d2817] py-1.5 px-3 mb-2 rounded-xs flex justify-between items-center shadow-xs">
+                        <span class="text-[10px] md:text-xs font-bold tracking-widest uppercase">Papan Sejarah</span>
+                        <span class="retro-title font-bold text-sm md:text-base tracking-wide text-amber-200">ULAR TANGGA ORDE BARU</span>
+                        <span class="text-[10px] md:text-xs font-bold tracking-widest uppercase">1966 – 1998</span>
+                    </div>
+
+                    <div class="relative w-full max-w-[620px] aspect-square border-2 border-[#3d2817] bg-[#3d2817] select-none overflow-hidden">
+                        <div id="board-grid" class="grid grid-cols-10 grid-rows-10 w-full h-full relative z-10"></div>
+                        <svg id="board-svg-overlay" viewBox="0 0 1000 1000" preserveAspectRatio="none"></svg>
+                        <div id="board-labels-layer" class="grid grid-cols-10 grid-rows-10 w-full h-full absolute inset-0 z-20 pointer-events-none"></div>
+                        <div id="board-tokens-layer" class="absolute inset-0 w-full h-full z-30 pointer-events-none"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT / CONTROL & STATUS PANEL -->
+            <div class="w-full lg:w-1/3 flex flex-col gap-4">
+                <div class="parchment-card p-5 rounded-lg shadow-md">
+                    <div class="flex justify-between items-center mb-2 border-b border-stone-300 pb-2">
+                        <span class="text-xs font-bold uppercase tracking-wider text-stone-500">Status Giliran</span>
+                        <span id="turn-badge" class="px-2.5 py-0.5 rounded text-xs font-bold bg-blue-100 text-blue-900 border border-blue-400">Giliran Pemain 1</span>
+                    </div>
+                    
+                    <h3 id="current-player-name" class="retro-title text-xl font-bold text-[#3d2817] mb-3">Pemain 1</h3>
+                    
+                    <div class="flex items-center justify-between gap-4 bg-amber-50 p-3.5 rounded-lg border-2 border-[#8c6d53]">
+                        <div id="dice-box" class="w-16 h-16 bg-white border-2 border-[#3d2817] rounded-lg shadow-md flex items-center justify-center select-none p-2">
+                            <svg id="dice-svg-icon" viewBox="0 0 24 24" class="w-10 h-10 drop-shadow-xs" fill="none" stroke="#2b1b11" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="2" y="2" width="20" height="20" rx="3" fill="#fefbf6"/>
+                                <circle cx="12" cy="12" r="2" fill="#2b1b11"/>
+                            </svg>
+                        </div>
+                        <button type="button" id="roll-btn" onclick="rollDice()" class="flex-grow bg-[#8c2d19] hover:bg-[#6e2111] disabled:bg-stone-400 disabled:cursor-not-allowed text-amber-50 font-bold py-3.5 px-4 rounded-lg border-2 border-[#3d2817] shadow transition transform active:scale-95 text-base cursor-pointer">
+                            Kocok Dadu
+                        </button>
+                    </div>
+                    <p class="text-[11px] text-stone-500 mt-1.5 text-center">Tip: Tekan tombol <strong>Spasi</strong> pada keyboard untuk mengocok dadu.</p>
+                </div>
+
+                <!-- Player Standings -->
+                <div class="parchment-card p-4 rounded-lg shadow-md">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-stone-600 mb-2.5 border-b border-stone-300 pb-1.5">Posisi Peserta</h4>
+                    <div id="player-standings" class="space-y-2"></div>
+                </div>
+
+                <!-- Event Log -->
+                <div class="parchment-card p-4 rounded-lg shadow-md flex-grow">
+                    <h4 class="text-xs font-bold uppercase tracking-wider text-stone-600 mb-2 border-b border-stone-300 pb-1.5">Catatan Perjalanan Sejarah</h4>
+                    <div id="game-log" class="h-44 overflow-y-auto space-y-2 text-xs text-stone-800 pr-1"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- TRIVIA & SNAKE CRISIS QUESTION MODAL -->
+    <div id="trivia-modal" class="fixed inset-0 bg-stone-950/80 backdrop-blur-xs flex items-center justify-center p-4 z-50 hidden">
+        <div id="trivia-modal-card" class="parchment max-w-lg w-full p-6 rounded-lg shadow-2xl">
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b-2 border-[#8c6d53] pb-2.5 mb-3">
+                <div class="flex items-center gap-1.5">
+                    <span id="trivia-mode-badge" class="bg-[#8c2d19] text-amber-100 text-xs font-bold px-2.5 py-1 rounded uppercase tracking-wider">📖 Uji Sejarah Orde Baru</span>
+                    <span id="trivia-diff-badge" class="hidden text-xs font-bold px-2 py-1 rounded uppercase tracking-wider border">Sulit (±6)</span>
+                </div>
+                <span id="trivia-player-tag" class="text-xs font-bold text-stone-700">Giliran Menjawab</span>
+            </div>
+
+            <!-- Crisis Banner (Only visible when landing on a snake head) -->
+            <div id="snake-crisis-banner" class="hidden mb-3.5 p-3 rounded bg-rose-900 text-amber-50 border border-rose-950 text-xs leading-relaxed shadow-inner">
+                <div class="font-bold text-amber-200 uppercase tracking-wide mb-0.5">⚠️ Peringatan Kepala Ular Krisis!</div>
+                <div id="snake-crisis-desc">Anda berada di ambang tergelincir turun. Jawab soal tingkat SULIT ini dengan benar untuk selamat dan bertahan!</div>
+            </div>
+
+            <!-- Difficulty Selector (Visible on standard Trivia Tiles before picking difficulty) -->
+            <div id="difficulty-selector-panel" class="hidden space-y-3 mb-2">
+                <p class="text-xs md:text-sm text-stone-800 font-medium leading-relaxed">
+                    Anda mendarat di petak <strong>Uji Sejarah Orde Baru</strong>! Pilih tingkat kesulitan tantangan sesuai keberanian strategi Anda:
+                </p>
+                <div class="grid grid-cols-1 gap-2.5">
+                    <button type="button" onclick="selectTriviaDifficulty('mudah')" class="w-full text-left p-3 rounded-lg border-2 border-emerald-600 bg-emerald-50 hover:bg-emerald-100 transition flex items-center justify-between shadow-xs cursor-pointer">
+                        <div>
+                            <div class="font-bold text-emerald-950 text-sm">🟢 Tingkat Mudah (Dasar)</div>
+                            <div class="text-xs text-emerald-800">Fakta dasar & tokoh penting era Orde Baru</div>
+                        </div>
+                        <span class="px-2.5 py-1 rounded bg-emerald-700 text-white font-bold text-xs shrink-0">Benar +2 / Salah -2</span>
+                    </button>
+
+                    <button type="button" onclick="selectTriviaDifficulty('sedang')" class="w-full text-left p-3 rounded-lg border-2 border-amber-600 bg-amber-50 hover:bg-amber-100 transition flex items-center justify-between shadow-xs cursor-pointer">
+                        <div>
+                            <div class="font-bold text-amber-950 text-sm">🟡 Tingkat Sedang (Menengah)</div>
+                            <div class="text-xs text-amber-800">Kebijakan politik, ekonomi, & peristiwa kunci</div>
+                        </div>
+                        <span class="px-2.5 py-1 rounded bg-amber-600 text-white font-bold text-xs shrink-0">Benar +4 / Salah -4</span>
+                    </button>
+
+                    <button type="button" onclick="selectTriviaDifficulty('sulit')" class="w-full text-left p-3 rounded-lg border-2 border-rose-700 bg-rose-50 hover:bg-rose-100 transition flex items-center justify-between shadow-xs cursor-pointer">
+                        <div>
+                            <div class="font-bold text-rose-950 text-sm">🔴 Tingkat Sulit (HOTS / Analisis)</div>
+                            <div class="text-xs text-rose-800">Analisis mendalam kronologi, regulasi, & krisis</div>
+                        </div>
+                        <span class="px-2.5 py-1 rounded bg-rose-700 text-white font-bold text-xs shrink-0">Benar +6 / Salah -6</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Question & Options Container -->
+            <div id="trivia-question-panel">
+                <p id="trivia-question" class="text-sm md:text-base font-bold text-[#3d2817] mb-4 leading-relaxed">
+                    Pertanyaan akan muncul di sini...
+                </p>
+
+                <div id="trivia-options" class="space-y-2 mb-4"></div>
+            </div>
+
+            <div id="trivia-feedback" class="hidden"></div>
+
+            <button type="button" id="trivia-close-btn" onclick="closeTriviaModal()" class="hidden w-full bg-[#4a3525] hover:bg-[#332317] text-amber-100 font-bold py-2.5 px-4 rounded border border-[#3d2817] shadow transition cursor-pointer">
+                Lanjutkan Permainan
+            </button>
+        </div>
+    </div>
+
+    <!-- WINNER MODAL -->
+    <div id="winner-modal" class="fixed inset-0 bg-stone-950/80 backdrop-blur-xs flex items-center justify-center p-4 z-50 hidden">
+        <div class="parchment max-w-md w-full p-7 rounded-lg shadow-2xl text-center">
+            <div class="text-5xl mb-3">🏆</div>
+            <h2 class="retro-title text-2xl md:text-3xl font-extrabold text-[#3d2817] mb-2">Selamat, Pemenang!</h2>
+            <p id="winner-message" class="text-sm text-stone-700 mb-6 leading-relaxed">
+                Berhasil mencapai petak 100!
+            </p>
+            <button type="button" onclick="resetGame()" class="w-full bg-[#8c6d53] hover:bg-[#725741] text-amber-50 font-bold py-3 px-6 rounded border-2 border-[#4a3525] shadow transition cursor-pointer">
+                Main Lagi
+            </button>
+        </div>
+    </div>
+
+    <!-- QUESTION BANK (BANK SOAL) MODAL -->
+    <div id="question-bank-modal" class="fixed inset-0 bg-stone-950/75 backdrop-blur-xs flex items-center justify-center p-3 md:p-5 z-50 hidden">
+        <div class="parchment max-w-5xl w-full max-h-[90vh] flex flex-col rounded-lg shadow-2xl overflow-hidden">
+            <div class="bg-[#4a3525] text-amber-100 px-5 py-3.5 flex items-center justify-between border-b-2 border-[#3d2817]">
+                <div>
+                    <h3 class="retro-title text-lg md:text-xl font-bold text-amber-200">📚 Manajemen Bank Soal Sejarah Orde Baru</h3>
+                    <p class="text-[11px] text-amber-100/80">Dikelompokkan menjadi 3 tingkat kesulitan: Mudah (±2), Sedang (±4), dan Sulit/HOTS (±6 & Penyelamat Ular).</p>
+                </div>
+                <button type="button" onclick="closeQuestionBankModal()" class="bg-amber-950/60 hover:bg-rose-800 text-amber-100 w-8 h-8 rounded flex items-center justify-center font-bold border border-amber-200/30 transition cursor-pointer" title="Tutup">✕</button>
+            </div>
+
+            <div class="flex-grow overflow-y-auto p-4 md:p-5 grid grid-cols-1 lg:grid-cols-12 gap-5 bg-[#fcf8f2]">
+                
+                <!-- Left: Add / Edit Question Form -->
+                <div class="lg:col-span-5 parchment-card p-4 rounded-lg h-fit">
+                    <div class="flex items-center justify-between mb-3 border-b border-stone-300 pb-2">
+                        <h4 id="qb-form-title" class="font-bold text-sm text-[#3d2817]">➕ Tambah Soal Baru</h4>
+                        <button type="button" id="qb-cancel-edit-btn" onclick="resetQuestionForm()" class="hidden text-xs text-rose-700 hover:underline font-bold cursor-pointer">Batal Edit</button>
+                    </div>
+                    <input type="hidden" id="qb-edit-index" value="-1">
+                    
+                    <div class="space-y-2.5 text-xs">
+                        <div>
+                            <label class="block font-bold text-stone-700 mb-1">Tingkat Kesulitan Soal:</label>
+                            <select id="qb-difficulty" class="w-full p-2 rounded border border-[#8c6d53] bg-amber-50 font-bold text-stone-900">
+                                <option value="mudah">🟢 Mudah (Maju +2 / Mundur -2 petak)</option>
+                                <option value="sedang">🟡 Sedang (Maju +4 / Mundur -4 petak)</option>
+                                <option value="sulit">🔴 Sulit / HOTS (Maju +6 / Mundur -6 & Penyelamat Ular)</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block font-bold text-stone-700 mb-1">Pertanyaan Sejarah:</label>
+                            <textarea id="qb-question" rows="2" placeholder="Tuliskan pertanyaan seputar Orde Baru..." class="w-full p-2 rounded border border-[#8c6d53] bg-white text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500"></textarea>
+                        </div>
+
+                        <div class="grid grid-cols-1 gap-2">
+                            <div>
+                                <label class="block font-bold text-stone-700 mb-0.5">Pilihan A:</label>
+                                <input type="text" id="qb-opt-0" placeholder="Jawaban A" class="w-full p-1.5 rounded border border-[#8c6d53] bg-white text-stone-900">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-stone-700 mb-0.5">Pilihan B:</label>
+                                <input type="text" id="qb-opt-1" placeholder="Jawaban B" class="w-full p-1.5 rounded border border-[#8c6d53] bg-white text-stone-900">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-stone-700 mb-0.5">Pilihan C:</label>
+                                <input type="text" id="qb-opt-2" placeholder="Jawaban C" class="w-full p-1.5 rounded border border-[#8c6d53] bg-white text-stone-900">
+                            </div>
+                            <div>
+                                <label class="block font-bold text-stone-700 mb-0.5">Pilihan D:</label>
+                                <input type="text" id="qb-opt-3" placeholder="Jawaban D" class="w-full p-1.5 rounded border border-[#8c6d53] bg-white text-stone-900">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block font-bold text-stone-700 mb-1">Kunci Jawaban Benar:</label>
+                            <select id="qb-correct" class="w-full p-2 rounded border border-[#8c6d53] bg-amber-50 font-bold text-stone-900">
+                                <option value="0">Pilihan A</option>
+                                <option value="1">Pilihan B</option>
+                                <option value="2">Pilihan C</option>
+                                <option value="3">Pilihan D</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block font-bold text-stone-700 mb-1">Pembahasan / Fakta Sejarah:</label>
+                            <textarea id="qb-info" rows="2" placeholder="Penjelasan singkat setelah pemain menjawab..." class="w-full p-2 rounded border border-[#8c6d53] bg-white text-stone-900 focus:outline-none focus:ring-2 focus:ring-amber-500"></textarea>
+                        </div>
+
+                        <div id="qb-status-msg" class="hidden p-2 rounded text-xs font-semibold"></div>
+
+                        <button type="button" onclick="saveQuestionFromForm()" class="w-full bg-[#8c2d19] hover:bg-[#6e2111] text-amber-50 font-bold py-2.5 px-4 rounded border border-[#3d2817] shadow-xs transition cursor-pointer">
+                            💾 Simpan Soal ke Bank Soal
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Right: Existing Questions List with Difficulty Filter Tabs -->
+                <div class="lg:col-span-7 flex flex-col">
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
+                        <div class="flex flex-wrap items-center gap-1.5">
+                            <button type="button" onclick="setBankFilter('all')" data-filter="all" class="qb-filter-btn px-2.5 py-1 rounded text-xs font-bold bg-[#4a3525] text-amber-100 border border-[#3d2817] cursor-pointer">Semua (<span id="qb-count-all">30</span>)</button>
+                            <button type="button" onclick="setBankFilter('mudah')" data-filter="mudah" class="qb-filter-btn px-2.5 py-1 rounded text-xs font-bold bg-white text-emerald-900 border border-emerald-500 cursor-pointer">🟢 Mudah (<span id="qb-count-mudah">10</span>)</button>
+                            <button type="button" onclick="setBankFilter('sedang')" data-filter="sedang" class="qb-filter-btn px-2.5 py-1 rounded text-xs font-bold bg-white text-amber-900 border border-amber-500 cursor-pointer">🟡 Sedang (<span id="qb-count-sedang">10</span>)</button>
+                            <button type="button" onclick="setBankFilter('sulit')" data-filter="sulit" class="qb-filter-btn px-2.5 py-1 rounded text-xs font-bold bg-white text-rose-900 border border-rose-500 cursor-pointer">🔴 Sulit (<span id="qb-count-sulit">10</span>)</button>
+                        </div>
+                        <button type="button" onclick="resetDefaultTrivia()" class="text-xs bg-amber-100 hover:bg-amber-200 text-stone-800 border border-[#8c6d53] px-2.5 py-1 rounded font-bold transition cursor-pointer">
+                            ↺ Soal Bawaan
+                        </button>
+                    </div>
+                    <div id="qb-questions-list" class="space-y-2.5 max-h-[54vh] overflow-y-auto pr-1"></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="w-full max-w-6xl text-center mt-6 pt-4 border-t border-stone-300 text-xs text-stone-500">
+        Ular Tangga Arsip Sejarah Orde Baru &bull; Dibuat untuk Pembelajaran Interaktif
+    </footer>
+
+    <!-- Audio Synth (Web Audio API) -->
+    <script>
+        const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
+        const audioCtx = AudioCtxClass ? new AudioCtxClass() : null;
+
+        function playSound(type) {
+            if (!audioCtx) return;
+            try {
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                osc.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+
+                const now = audioCtx.currentTime;
+                if (type === 'dice') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(300, now);
+                    osc.frequency.exponentialRampToValueAtTime(150, now + 0.15);
+                    gainNode.gain.setValueAtTime(0.3, now);
+                    gainNode.gain.linearRampToValueAtTime(0.01, now + 0.15);
+                    osc.start(now);
+                    osc.stop(now + 0.15);
+                } else if (type === 'ladder') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(400, now);
+                    osc.frequency.exponentialRampToValueAtTime(800, now + 0.4);
+                    gainNode.gain.setValueAtTime(0.25, now);
+                    gainNode.gain.linearRampToValueAtTime(0.01, now + 0.4);
+                    osc.start(now);
+                    osc.stop(now + 0.4);
+                } else if (type === 'snake') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(400, now);
+                    osc.frequency.exponentialRampToValueAtTime(120, now + 0.5);
+                    gainNode.gain.setValueAtTime(0.2, now);
+                    gainNode.gain.linearRampToValueAtTime(0.01, now + 0.5);
+                    osc.start(now);
+                    osc.stop(now + 0.5);
+                } else if (type === 'success') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(523.25, now);
+                    osc.frequency.setValueAtTime(659.25, now + 0.1);
+                    osc.frequency.setValueAtTime(783.99, now + 0.2);
+                    gainNode.gain.setValueAtTime(0.3, now);
+                    gainNode.gain.linearRampToValueAtTime(0.01, now + 0.4);
+                    osc.start(now);
+                    osc.stop(now + 0.4);
+                } else if (type === 'fail') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(250, now);
+                    osc.frequency.setValueAtTime(180, now + 0.2);
+                    gainNode.gain.setValueAtTime(0.3, now);
+                    gainNode.gain.linearRampToValueAtTime(0.01, now + 0.4);
+                    osc.start(now);
+                    osc.stop(now + 0.4);
+                } else if (type === 'warning') {
+                    osc.type = 'square';
+                    osc.frequency.setValueAtTime(320, now);
+                    osc.frequency.setValueAtTime(240, now + 0.12);
+                    gainNode.gain.setValueAtTime(0.18, now);
+                    gainNode.gain.linearRampToValueAtTime(0.01, now + 0.3);
+                    osc.start(now);
+                    osc.stop(now + 0.3);
+                }
+            } catch (err) {
+                // Abaikan jika browser membatasi autoplay audio
+            }
+        }
+    </script>
+
+    <!-- Game Logic Script -->
+    <script>
+        // Game Configuration & State
+        let playerCount = 1;
+        let savedNames = ["Pemain 1", "Pemain 2", "Pemain 3", "Pemain 4"];
+        let players = [];
+        let currentPlayerIndex = 0;
+        let isRolling = false;
+        let usedTriviaIndices = [];
+        let currentBankFilter = "all";
+        let pendingSnakeChallenge = null;
+        let activeTriviaItem = null;
+        let activeDifficulty = "mudah";
+
+        // Difficulty Configuration (Mudah ±2, Sedang ±4, Sulit ±6)
+        const DIFFICULTY_META = {
+            mudah: {
+                label: "Mudah",
+                icon: "🟢",
+                steps: 2,
+                badgeClass: "bg-emerald-100 text-emerald-900 border-emerald-500"
+            },
+            sedang: {
+                label: "Sedang",
+                icon: "🟡",
+                steps: 4,
+                badgeClass: "bg-amber-100 text-amber-900 border-amber-500"
+            },
+            sulit: {
+                label: "Sulit (HOTS)",
+                icon: "🔴",
+                steps: 6,
+                badgeClass: "bg-rose-100 text-rose-900 border-rose-600"
+            }
+        };
+
+        // Colors for up to 4 players
+        const playerColors = [
+            { name: "Biru", hex: "#1d4ed8", bg: "bg-blue-700", fill: "#1d4ed8", border: "border-white", badge: "bg-blue-100 text-blue-900 border-blue-400" },
+            { name: "Hijau", hex: "#047857", bg: "bg-emerald-700", fill: "#047857", border: "border-white", badge: "bg-emerald-100 text-emerald-900 border-emerald-400" },
+            { name: "Ungu", hex: "#6d28d9", bg: "bg-purple-700", fill: "#6d28d9", border: "border-white", badge: "bg-purple-100 text-purple-900 border-purple-400" },
+            { name: "Hitam", hex: "#1c1917", bg: "bg-stone-900", fill: "#1c1917", border: "border-amber-300", badge: "bg-stone-200 text-stone-900 border-stone-500" }
+        ];
+
+        // Unique Pawn SVG shapes and icons for each of the 4 players
+        const pawnSvgShapes = [
+            // Pemain 1: Bentuk Pion Klasik (Pion Menteri / Kerucut Bermahkota)
+            `
+                <path d="M12 2C9.8 2 8 3.8 8 6c0 1.6 1 3 2.4 3.6C9.2 10.4 8.5 11.8 8.2 13.5 7 13.9 6 15 6 16.5c0 1.9 1.6 3.5 3.5 3.5h5c1.9 0 3.5-1.6 3.5-3.5 0-1.5-1-2.6-2.2-3-.3-1.7-1-3.1-2.2-3.9C15 9 16 7.6 16 6c0-2.2-1.8-4-4-4z"/>
+                <circle cx="12" cy="4.5" r="1.5" fill="#fef08a"/>
+            `,
+            // Pemain 2: Bentuk Perisai Sejarah (Shield / Perisai Pembangunan)
+            `
+                <path d="M12 2L4 5v6c0 5.5 3.8 10.7 8 12 4.2-1.3 8-6.5 8-12V5l-8-3z"/>
+                <path d="M12 6v12M8 10h8" stroke="#fef08a" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+            `,
+            // Pemain 3: Bentuk Bintang / Segilima Berkemilau (Star / Medal)
+            `
+                <path d="M12 2l2.4 7.2h7.6l-6.2 4.5 2.4 7.3-6.2-4.5-6.2 4.5 2.4-7.3-6.2-4.5h7.6z"/>
+                <circle cx="12" cy="12" r="3" fill="#fef08a"/>
+            `,
+            // Pemain 4: Bentuk Mahkota / Kubah Arsip (Crown / Dome)
+            `
+                <path d="M4 19h16v2H4zM5 16l2-9 5 4 5-4 2 9H5z"/>
+                <circle cx="12" cy="5" r="1.8" fill="#fef08a"/>
+            `
+        ];
+
+        // Ladders (Pembangunan / Kemajuan) -> start < end
+        const ladders = {
+            4: { to: 14, label: "Supersemar" },
+            9: { to: 31, label: "Repelita I" },
+            21: { to: 42, label: "Swasembada" },
+            28: { to: 54, label: "Trilogi" },
+            37: { to: 64, label: "Pemilu 1971" },
+            51: { to: 72, label: "Infrastruktur" },
+            62: { to: 81, label: "Ekspor Nonmigas" },
+            71: { to: 91, label: "Lepas Landas" }
+        };
+
+        // Snakes (Krisis / Hambatan) -> start > end
+        const snakes = {
+            17: { to: 6, label: "Gejolak 1966", crisisTag: "1966" },
+            34: { to: 12, label: "Malari 1974", crisisTag: "malari" },
+            47: { to: 26, label: "Petisi 50", crisisTag: "petisi50" },
+            65: { to: 44, label: "Kudatuli 1996", crisisTag: "kudatuli" },
+            78: { to: 56, label: "Krisis Moneter", crisisTag: "krismon" },
+            88: { to: 67, label: "Tragedi Trisakti", crisisTag: "trisakti" },
+            96: { to: 75, label: "Reformasi 1998", crisisTag: "reformasi" }
+        };
+
+        // Trivia Blocks (Uji Sejarah Orde Baru)
+        const triviaBlocks = [7, 15, 24, 33, 41, 49, 58, 69, 77, 84, 93];
+
+        // Default 30 Questions Categorized into 3 Difficulty Levels (10 Mudah, 10 Sedang, 10 Sulit/HOTS)
+        const defaultTriviaDatabase = [
+            // === TINGKAT MUDAH (10 SOAL) ===
+            {
+                difficulty: "mudah",
+                q: "Apa kepanjangan dari Supersemar yang dikeluarkan pada tanggal 11 Maret 1966?",
+                options: [
+                    "Surat Perintah Sebelas Maret",
+                    "Surat Perjanjian Semesta Rakyat",
+                    "Surat Pemulihan Keamanan Nasional",
+                    "Surat Persetujuan Menteri Negara"
+                ],
+                correct: 0,
+                info: "Supersemar (Surat Perintah Sebelas Maret) adalah mandat dari Presiden Soekarno kepada Letjen Soeharto untuk memulihkan keamanan dan ketertiban."
+            },
+            {
+                difficulty: "mudah",
+                q: "Siapakah tokoh yang menjabat sebagai Presiden Republik Indonesia selama hampir seluruh era Orde Baru (1967–1998)?",
+                options: ["Soeharto", "B.J. Habibie", "Adam Malik", "Sri Sultan Hamengkubuwono IX"],
+                correct: 0,
+                info: "Soeharto menjabat sebagai Pejabat Presiden sejak 1967 dan Presiden penuh sejak Maret 1968 hingga mengundurkan diri pada 21 Mei 1998."
+            },
+            {
+                difficulty: "mudah",
+                q: "Program pembangunan berjangka 5 tahun yang dimulai sejak 1 April 1969 pada masa Orde Baru dikenal dengan nama...",
+                options: ["Propenas", "Repelita (Rencana Pembangunan Lima Tahun)", "GBHN Semesta", "Depernas"],
+                correct: 1,
+                info: "Repelita I (1969–1974) menitikberatkan pada sektor pertanian dan industri pendukung pertanian."
+            },
+            {
+                difficulty: "mudah",
+                q: "Pada tahun 1984, Indonesia meraih penghargaan dari organisasi pangan dunia (FAO) atas keberhasilan mencapai...",
+                options: ["Swasembada Beras", "Ekspor Kopi Terbesar", "Revolusi Industri Baja", "Bebas Kelaparan Asia"],
+                correct: 0,
+                info: "Keberhasilan swasembada beras didukung oleh program Revolusi Hijau, Panca Usaha Tani, dan pembangunan irigasi."
+            },
+            {
+                difficulty: "mudah",
+                q: "Presiden Soeharto menyatakan berhenti dari jabatannya sebagai Presiden RI dan menandai berakhirnya era Orde Baru pada tanggal...",
+                options: ["21 Mei 1998", "17 Agustus 1998", "12 Mei 1998", "10 November 1998"],
+                correct: 0,
+                info: "Pada 21 Mei 1998 di Istana Merdeka, Presiden Soeharto mengundurkan diri dan digantikan oleh Wakil Presiden B.J. Habibie."
+            },
+            {
+                difficulty: "mudah",
+                q: "Program pemerintah Orde Baru untuk mengurangi kepadatan penduduk di Pulau Jawa dan Bali dengan memindahkan penduduk ke luar Jawa disebut...",
+                options: ["Transmigrasi", "Urbanisasi", "Relokasi Nasional", "Desentralisasi"],
+                correct: 0,
+                info: "Program transmigrasi diarahkan ke Sumatra, Kalimantan, Sulawesi, dan Papua untuk pemerataan penduduk dan pembukaan lahan pertanian."
+            },
+            {
+                difficulty: "mudah",
+                q: "Pemilihan Umum pertama pada masa Orde Baru diselenggarakan pada tahun...",
+                options: ["1971", "1968", "1977", "1982"],
+                correct: 0,
+                info: "Pemilu 1971 diikuti oleh 9 partai politik dan 1 Golongan Karya (Golkar), yang dimenangkan oleh Golkar."
+            },
+            {
+                difficulty: "mudah",
+                q: "Program pelayanan kesehatan terpadu bagi ibu dan anak di tingkat desa/kelurahan yang digalakkan secara masif pada era Orde Baru adalah...",
+                options: ["Posyandu & Puskesmas", "BPJS Kesehatan", "Jaminan Kesehatan Daerah", "Rumah Sakit Rujukan"],
+                correct: 0,
+                info: "Posyandu (Pos Pelayanan Terpadu) bersama program Keluarga Berencana (KB) berhasil menekan angka kematian bayi secara signifikan."
+            },
+            {
+                difficulty: "mudah",
+                q: "Aksi demonstrasi mahasiswa pada awal tahun 1966 menyuarakan Tritura. Apa isi dari Tritura tersebut?",
+                options: [
+                    "Bubarkan PKI, bersihkan kabinet dari unsur G30S, dan turunkan harga",
+                    "Bubarkan DPR, bentuk kabinet baru, dan adakan pemilu segera",
+                    "Turunkan pajak, bebaskan tahanan politik, dan nasionalisasi aset",
+                    "Hapuskan Dwi Fungsi ABRI, turunkan harga, dan bubarkan MPRS"
+                ],
+                correct: 0,
+                info: "Tri Tuntutan Rakyat (Tritura) menjadi tonggak awal lahirnya Orde Baru yang dipelopori KAMI dan KAPPI."
+            },
+            {
+                difficulty: "mudah",
+                q: "Siapakah Wakil Presiden RI yang dilantik menggantikan Presiden Soeharto pada 21 Mei 1998?",
+                options: ["B.J. Habibie", "Try Sutrisno", "Sudharmono", "Harmoko"],
+                correct: 0,
+                info: "Sesuai Pasal 8 UUD 1945, Wakil Presiden B.J. Habibie mengucapkan sumpah jabatan sebagai Presiden RI ke-3 pada 21 Mei 1998."
+            },
+
+            // === TINGKAT SEDANG (10 SOAL) ===
+            {
+                difficulty: "sedang",
+                q: "Konsep kebijakan ekonomi Orde Baru yang bertumpu pada stabilitas nasional, pertumbuhan ekonomi, dan pemerataan disebut...",
+                options: ["Trilogi Pembangunan", "Catur Karya Kabinet", "Panca Usaha Tani", "Nawacita Pembangunan"],
+                correct: 0,
+                info: "Trilogi Pembangunan menjadi landasan utama arah pembangunan ekonomi pemerintah Orde Baru."
+            },
+            {
+                difficulty: "sedang",
+                q: "Pada tahun 1973, pemerintah Orde Baru melakukan penyederhanaan (fusi) partai politik menjadi dua partai dan satu golongan karya, yaitu...",
+                options: [
+                    "PPP, PDI, dan Golkar",
+                    "PNI, Masyumi, dan Golkar",
+                    "PKB, PAN, dan Golkar",
+                    "PDI, PSI, dan ABRI"
+                ],
+                correct: 0,
+                info: "Partai berhaluan Islam bergabung ke PPP, partai nasionalis/non-Islam ke PDI, serta Golongan Karya (Golkar)."
+            },
+            {
+                difficulty: "sedang",
+                q: "Peran ganda militer Indonesia pada masa Orde Baru sebagai kekuatan pertahanan keamanan sekaligus kekuatan sosial-politik disebut...",
+                options: ["Sishankamrata", "Dwi Fungsi ABRI", "Sapta Marga", "Komando Operasi"],
+                correct: 1,
+                info: "Melalui Dwi Fungsi ABRI, anggota militer banyak menduduki jabatan sipil seperti menteri, gubernur, hingga anggota DPR/MPR."
+            },
+            {
+                difficulty: "sedang",
+                q: "Penataran yang wajib diikuti pelajar, mahasiswa, dan pegawai negeri untuk menghayati nilai-nilai Pancasila pada masa Orde Baru adalah...",
+                options: ["Penataran P4", "Penataran BP7", "Kursus Lemhannas", "Bimbingan Pancasila"],
+                correct: 0,
+                info: "P4 (Pedoman Penghayatan dan Pengamalan Pancasila) ditetapkan melalui Tap MPR No. II/MPR/1978."
+            },
+            {
+                difficulty: "sedang",
+                q: "Indonesia turut memprakarsai berdirinya organisasi kerja sama regional Asia Tenggara (ASEAN) pada tanggal 8 Agustus 1967 di Bangkok melalui Menteri Luar Negeri...",
+                options: ["Adam Malik", "Ali Alatas", "Mochtar Kusumaatmadja", "Subandrio"],
+                correct: 0,
+                info: "Adam Malik menandatangani Deklarasi Bangkok bersama perwakilan Malaysia, Singapura, Thailand, dan Filipina."
+            },
+            {
+                difficulty: "sedang",
+                q: "Wilayah bekas koloni Portugis yang berintegrasi menjadi provinsi ke-27 Indonesia pada tahun 1976 (melalui Operasi Seroja) adalah...",
+                options: ["Timor Timur", "Irian Barat", "Kalimantan Utara", "Maluku Selatan"],
+                correct: 0,
+                info: "Timor Timur menjadi provinsi ke-27 RI berdasarkan UU No. 7 Tahun 1976 sebelum akhirnya merdeka menjadi Timor-Leste pada 1999."
+            },
+            {
+                difficulty: "sedang",
+                q: "Kebijakan Menteri Pendidikan dan Kebudayaan Daoed Joesoef tahun 1978 untuk meredam aktivitas politik mahasiswa di perguruan tinggi dikenal dengan istilah...",
+                options: ["NKK/BKK", "P4 dan BP7", "Kopkamtib", "Petisi 50"],
+                correct: 0,
+                info: "Normalisasi Kehidupan Kampus / Badan Koordinasi Kemahasiswaan (NKK/BKK) membatasi ruang gerak politik mahasiswa di kampus."
+            },
+            {
+                difficulty: "sedang",
+                q: "Kebijakan pemerintah Orde Baru pada tahun 1985 yang mewajibkan seluruh partai politik dan organisasi kemasyarakatan mencantumkan Pancasila sebagai satu-satunya dasar organisasi adalah...",
+                options: ["Asas Tunggal Pancasila", "Dekrit Presiden", "Normalisasi Kehidupan Kampus", "Konsensus Nasional"],
+                correct: 0,
+                info: "Asas Tunggal Pancasila diatur melalui UU No. 3 Tahun 1985 tentang Partai Politik dan Golkar serta UU No. 8 Tahun 1985 tentang Ormas."
+            },
+            {
+                difficulty: "sedang",
+                q: "Langkah strategis pertama pemerintah Orde Baru dalam memperbaiki hubungan luar negeri yang sempat tegang pada masa Demokrasi Terpimpin adalah...",
+                options: [
+                    "Mengakhiri konfrontasi dengan Malaysia dan kembali menjadi anggota PBB pada 1966",
+                    "Memutus hubungan diplomatik dengan seluruh negara Blok Barat",
+                    "Membentuk pakta pertahanan militer bersama Uni Soviet",
+                    "Keluar dari keanggotaan Gerakan Non-Blok (GNB)"
+                ],
+                correct: 0,
+                info: "Pada Agustus 1966 Indonesia menandatangani persetujuan normalisasi hubungan dengan Malaysia dan resmi kembali ke PBB pada 28 September 1966."
+            },
+            {
+                difficulty: "sedang",
+                q: "Program intensifikasi pertanian pada masa Orde Baru yang meliputi pengolahan tanah, bibit unggul, pengairan, pemupukan, dan pemberantasan hama disebut...",
+                options: ["Panca Usaha Tani", "Sapta Krida Tani", "Bimas Gotong Royong", "Catur Bina Desa"],
+                correct: 0,
+                info: "Panca Usaha Tani merupakan bagian dari program Bimbingan Massal (Bimas) dalam Revolusi Hijau untuk mendongkrak produksi beras nasional."
+            },
+
+            // === TINGKAT SULIT / HOTS (10 SOAL - DIGUNAKAN JUGA UNTUK PENYELAMATAN KEPALA ULAR) ===
+            {
+                difficulty: "sulit",
+                crisisTag: "1966",
+                q: "Ketetapan MPRS No. IX/MPRS/1966 memiliki arti krusial bagi landasan hukum kekuasaan Orde Baru karena ketetapan tersebut...",
+                options: [
+                    "Mengukuhkan Supersemar menjadi ketetapan MPRS sehingga tidak dapat dicabut sewaktu-waktu oleh Presiden Soekarno",
+                    "Membubarkan DPR-GR dan mengangkat Soeharto langsung menjadi Presiden seumur hidup",
+                    "Menetapkan pembatalan seluruh utang luar negeri Indonesia kepada negara-negara Blok Barat",
+                    "Menghapuskan kedudukan MPRS sebagai lembaga tertinggi negara dalam struktur ketatanegaraan"
+                ],
+                correct: 0,
+                info: "Dengan dikukuhkannya Supersemar melalui Tap MPRS No. IX/MPRS/1966, kedudukan hukum Letjen Soeharto menjadi sangat kuat secara konstitusional."
+            },
+            {
+                difficulty: "sulit",
+                crisisTag: "malari",
+                q: "Peristiwa Malari (15 Januari 1974) tidak hanya dipicu penolakan terhadap modal asing Jepang, tetapi juga mencerminkan rivalitas internal elite kekuasaan Orde Baru antara...",
+                options: [
+                    "Jenderal Soemitro (Pangkopkamtib) dengan Mayjen Ali Moertopo (Aspri Presiden / Opsus)",
+                    "Jenderal A.H. Nasution dengan Jenderal Ahmad Yani mengenai doktrin teritorial",
+                    "Adam Malik dengan Sri Sultan Hamengkubuwono IX terkait kebijakan ekspor migas",
+                    "B.J. Habibie dengan Radius Prawiro mengenai arah industri strategis nasional"
+                ],
+                correct: 0,
+                info: "Pasca-Malari 1974, Jenderal Soemitro mengundurkan diri dari jabatan Pangkopkamtib dan lembaga Aspri dibubarkan oleh Presiden Soeharto."
+            },
+            {
+                difficulty: "sulit",
+                crisisTag: "petisi50",
+                q: "Latar belakang utama lahirnya 'Petisi 50' pada 5 Mei 1980 yang ditandatangani Ali Sadikin, A.H. Nasution, dan Mohammad Natsir adalah...",
+                options: [
+                    "Kritik terhadap pidato Presiden Soeharto di Pekanbaru dan Cijantung yang dinilai menafsirkan Pancasila untuk menyudutkan lawan politik dan menyeret ABRI memihak Golkar",
+                    "Penolakan terhadap rencana pemerintah menggabungkan seluruh partai politik menjadi satu partai tunggal",
+                    "Protes atas keputusan pemerintah menaikkan harga bahan bakar minyak sebesar 300 persen",
+                    "Tuntutan pembubaran Badan Pemeriksa Keuangan dan Mahkamah Agung karena dianggap tidak independen"
+                ],
+                correct: 0,
+                info: "Petisi 50 memprotes pidato Soeharto dalam Rapim ABRI di Pekanbaru (27 Maret 1980) dan HUT Kopassandha di Cijantung (16 April 1980)."
+            },
+            {
+                difficulty: "sulit",
+                crisisTag: "kudatuli",
+                q: "Peristiwa Kudatuli pada 27 Juli 1996 merupakan puncak konflik internal Partai Demokrasi Indonesia (PDI) yang berawal dari...",
+                options: [
+                    "Pengambilalihan kantor DPP PDI di Jl. Diponegoro oleh kubu Soerjadi (hasil Kongres Medan) dari pendukung Megawati Soekarnoputri",
+                    "Penolakan hasil Pemilu 1997 oleh seluruh saksi partai politik di kantor Komisi Pemilihan Umum",
+                    "Pemboikotan Sidang Umum MPR oleh Fraksi Karya Pembangunan dan Fraksi ABRI",
+                    "Pembubaran Partai Persatuan Pembangunan oleh Pengadilan Negeri Jakarta Pusat"
+                ],
+                correct: 0,
+                info: "Insiden 27 Juli 1996 (Kudatuli) memicu kerusuhan besar di Jakarta dan menjadi titik balik konsolidasi gerakan pro-demokrasi menjelang 1998."
+            },
+            {
+                difficulty: "sulit",
+                crisisTag: "krismon",
+                q: "Mengapa krisis nilai tukar Baht Thailand pada Juli 1997 berdampak jauh lebih parah terhadap perbankan dan korporasi Indonesia dibanding negara tetangga lainnya?",
+                options: [
+                    "Banyak korporasi swasta Indonesia menumpuk utang luar negeri jangka pendek dalam valuta asing tanpa lindung nilai (unhedged) serta rapuhnya pengawasan perbankan",
+                    "Indonesia tidak memiliki cadangan devisa sama sekali sejak awal dekade 1990-an",
+                    "Seluruh ekspor Indonesia pada tahun 1997 hanya bergantung pada komoditas karet dan timah",
+                    "Pemerintah Indonesia menolak bergabung dengan lembaga keuangan internasional sejak 1967"
+                ],
+                correct: 0,
+                info: "Utang swasta luar negeri tanpa hedging dan kredit macet perbankan menyebabkan likuidasi 16 bank pada November 1997 yang memicu kepanikan penarikan dana (bank run)."
+            },
+            {
+                difficulty: "sulit",
+                crisisTag: "trisakti",
+                q: "Tragedi Trisakti pada 12 Mei 1998 menjadi katalisator langsung jatuhnya pemerintahan Orde Baru karena peristiwa tersebut...",
+                options: [
+                    "Menewaskan empat mahasiswa saat aksi damai menuntut reformasi sehingga memicu gelombang solidaritas rakyat luas dan kerusuhan massa 13–15 Mei 1998",
+                    "Menyebabkan gedung DPR/MPR terbakar habis sehingga sidang istimewa tidak dapat diselenggarakan",
+                    "Membuat seluruh duta besar negara sahabat menarik perwakilannya dari Jakarta pada hari yang sama",
+                    "Mengakibatkan terputusnya seluruh jaringan komunikasi dan listrik di Pulau Jawa selama sebulan"
+                ],
+                correct: 0,
+                info: "Gugurnya Elang Mulia Lesmana, Heri Hertanto, Hafidin Royan, dan Hendriawan Sie mempercepat eskalasi tuntutan mundurnya Presiden Soeharto."
+            },
+            {
+                difficulty: "sulit",
+                crisisTag: "reformasi",
+                q: "Salah satu faktor politik paling menentukan yang membuat Presiden Soeharto akhirnya memutuskan berhenti pada 21 Mei 1998 setelah upaya membentuk Komite Reformasi gagal adalah...",
+                options: [
+                    "Pernyataan mundur secara serentak oleh 14 menteri bidang Ekuin yang dipimpin Ginandjar Kartasasmita pada malam 20 Mei 1998",
+                    "Keluarnya dekrit pembubaran kabinet oleh Mahkamah Agung pada pagi hari 21 Mei 1998",
+                    "Penolakan B.J. Habibie untuk mendampingi Presiden dalam sidang kabinet paripurna",
+                    "Keputusan PBB membekukan keanggotaan Indonesia di Dewan Ekonomi dan Sosial"
+                ],
+                correct: 0,
+                info: "Penolakan 14 menteri Ekuin untuk duduk dalam Kabinet Reformasi (20 Mei 1998) membuat Presiden Soeharto kehilangan dukungan struktural kabinetnya."
+            },
+            {
+                difficulty: "sulit",
+                q: "Untuk menstabilkan ekonomi yang mengalami hiperinflasi di atas 600% pada tahun 1966, pemerintah Orde Baru menggandeng tim ekonom UI ('Mafia Berkeley') dengan kebijakan awal berupa...",
+                options: [
+                    "Penerapan anggaran berimbang (balanced budget), penjadwalan ulang utang luar negeri melalui IGGI/Paris Club, serta pengesahan UU Penanaman Modal Asing (UU No. 1/1967)",
+                    "Nasionalisasi seluruh perusahaan perkebunan dan perbankan asing tanpa kompensasi",
+                    "Penerapan sistem ekonomi komando terpusat dengan mata uang tunggal ASEAN",
+                    "Penghapusan seluruh pajak ekspor dan pembekuan transaksi perdagangan internasional"
+                ],
+                correct: 0,
+                info: "Kombinasi kebijakan anggaran berimbang, bantuan IGGI, dan UU PMA 1967 berhasil menekan inflasi dari 650% (1966) menjadi sekitar 10% pada 1969."
+            },
+            {
+                difficulty: "sulit",
+                q: "Perbedaan mendasar antara kebijakan paket deregulasi perbankan 'Pakto 88' (Oktober 1988) dengan kebijakan ekonomi Orde Baru dekade 1970-an adalah...",
+                options: [
+                    "Pakto 88 membuka keran pendirian bank-bank swasta baru secara luas untuk memobilisasi dana masyarakat saat harga minyak dunia merosot",
+                    "Pakto 88 melarang seluruh bank swasta beroperasi di luar wilayah DKI Jakarta",
+                    "Pakto 88 mewajibkan seluruh masyarakat menukarkan emas dengan obligasi negara",
+                    "Pakto 88 menghapuskan peran Bank Indonesia sebagai bank sentral dan otoritas moneter"
+                ],
+                correct: 0,
+                info: "Pakto 88 memicu pertumbuhan pesat bank swasta nasional di akhir 1980-an setelah berakhirnya era booming minyak bumi."
+            },
+            {
+                difficulty: "sulit",
+                q: "Dalam struktur ketatanegaraan Orde Baru, mekanisme pemilihan Presiden dan Wakil Presiden setiap lima tahun dilakukan melalui...",
+                options: [
+                    "Pemilihan tidak langsung oleh Majelis Permusyawaratan Rakyat (MPR) hasil Pemilu yang komposisinya juga mencakup unsur utusan daerah, golongan, dan fraksi ABRI yang diangkat",
+                    "Pemilihan umum secara langsung oleh seluruh rakyat Indonesia dalam dua putaran",
+                    "Penunjukan langsung oleh Mahkamah Agung bersama Dewan Pertimbangan Agung",
+                    "Pemungutan suara tertutup oleh seluruh gubernur dan bupati se-Indonesia"
+                ],
+                correct: 0,
+                info: "Sebelum amandemen UUD 1945 era Reformasi, Presiden dan Wakil Presiden dipilih oleh MPR melalui Sidang Umum MPR."
+            }
+        ];
+
+        const STORAGE_KEY_TRIVIA = "ular_tangga_ordebaru_soal_v2_3level";
+        let triviaDatabase = [];
+
+        function normalizeDifficulty(val) {
+            if (val === "mudah" || val === "sedang" || val === "sulit") return val;
+            return "mudah";
+        }
+
+        function loadTriviaDatabase() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY_TRIVIA);
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        triviaDatabase = parsed.map(item => ({
+                            ...item,
+                            difficulty: normalizeDifficulty(item.difficulty)
+                        }));
+                        updateBankBadges();
+                        return;
+                    }
+                }
+            } catch (e) {
+                // Fallback ke soal bawaan
+            }
+            triviaDatabase = JSON.parse(JSON.stringify(defaultTriviaDatabase));
+            updateBankBadges();
+        }
+
+        function persistTriviaDatabase() {
+            try {
+                localStorage.setItem(STORAGE_KEY_TRIVIA, JSON.stringify(triviaDatabase));
+            } catch (e) {
+                // Abaikan jika localStorage penuh
+            }
+            updateBankBadges();
+        }
+
+        function updateBankBadges() {
+            const total = triviaDatabase.length;
+            const cMudah = triviaDatabase.filter(q => q.difficulty === "mudah").length;
+            const cSedang = triviaDatabase.filter(q => q.difficulty === "sedang").length;
+            const cSulit = triviaDatabase.filter(q => q.difficulty === "sulit").length;
+
+            const elHeader = document.getElementById('bank-count-badge');
+            const elAll = document.getElementById('qb-count-all');
+            const elMudah = document.getElementById('qb-count-mudah');
+            const elSedang = document.getElementById('qb-count-sedang');
+            const elSulit = document.getElementById('qb-count-sulit');
+
+            if (elHeader) elHeader.innerText = total;
+            if (elAll) elAll.innerText = total;
+            if (elMudah) elMudah.innerText = cMudah;
+            if (elSedang) elSedang.innerText = cSedang;
+            if (elSulit) elSulit.innerText = cSulit;
+        }
+
+        window.openQuestionBankModal = function() {
+            resetQuestionForm();
+            setBankFilter('all');
+            document.getElementById('question-bank-modal').classList.remove('hidden');
+        };
+
+        window.closeQuestionBankModal = function() {
+            document.getElementById('question-bank-modal').classList.add('hidden');
+        };
+
+        window.setBankFilter = function(filterLevel) {
+            currentBankFilter = filterLevel;
+            document.querySelectorAll('.qb-filter-btn').forEach(btn => {
+                const isSelected = btn.dataset.filter === filterLevel;
+                if (isSelected) {
+                    btn.classList.add('ring-2', 'ring-amber-400', 'scale-105');
+                } else {
+                    btn.classList.remove('ring-2', 'ring-amber-400', 'scale-105');
+                }
+            });
+            renderQuestionBankList();
+        };
+
+        function showQbStatus(msg, isError = false) {
+            const el = document.getElementById('qb-status-msg');
+            el.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-900', 'border-emerald-400', 'bg-rose-100', 'text-rose-900', 'border-rose-400');
+            if (isError) {
+                el.classList.add('bg-rose-100', 'text-rose-900', 'border', 'border-rose-400');
+            } else {
+                el.classList.add('bg-emerald-100', 'text-emerald-900', 'border', 'border-emerald-400');
+            }
+            el.innerText = msg;
+            setTimeout(() => {
+                el.classList.add('hidden');
+            }, 3000);
+        }
+
+        function renderQuestionBankList() {
+            updateBankBadges();
+            const listEl = document.getElementById('qb-questions-list');
+            listEl.innerHTML = '';
+
+            const letters = ['A', 'B', 'C', 'D'];
+            triviaDatabase.forEach((item, idx) => {
+                if (currentBankFilter !== 'all' && item.difficulty !== currentBankFilter) return;
+
+                const meta = DIFFICULTY_META[item.difficulty] || DIFFICULTY_META.mudah;
+                const card = document.createElement('div');
+                card.className = 'parchment-card p-3 rounded border border-[#8c6d53] text-xs shadow-2xs';
+                const optionsHtml = item.options.map((opt, oIdx) => {
+                    const isCorrect = oIdx === item.correct;
+                    return `<div class="${isCorrect ? 'font-bold text-emerald-800 bg-emerald-50 px-1.5 py-0.5 rounded' : 'text-stone-700 px-1.5'}">${letters[oIdx]}. ${opt} ${isCorrect ? '✓' : ''}</div>`;
+                }).join('');
+
+                card.innerHTML = `
+                    <div class="flex justify-between items-start gap-2 mb-1.5">
+                        <div class="font-bold text-[#3d2817] leading-snug">
+                            <span class="inline-block bg-[#4a3525] text-amber-100 px-1.5 py-0.5 rounded text-[10px] mr-1">#${idx + 1}</span>
+                            <span class="inline-block px-1.5 py-0.5 rounded text-[10px] border mr-1 ${meta.badgeClass}">${meta.icon} ${meta.label} (±${meta.steps})</span>
+                            <span>${item.q}</span>
+                        </div>
+                        <div class="flex items-center gap-1 shrink-0">
+                            <button type="button" onclick="editQuestionInForm(${idx})" class="px-2 py-1 bg-amber-100 hover:bg-amber-200 text-stone-900 border border-amber-500 rounded font-bold text-[11px] cursor-pointer">Edit</button>
+                            <button type="button" onclick="deleteQuestionFromBank(${idx})" class="px-2 py-1 bg-rose-100 hover:bg-rose-200 text-rose-900 border border-rose-400 rounded font-bold text-[11px] cursor-pointer">Hapus</button>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-1 mb-1.5">${optionsHtml}</div>
+                    <div class="text-[11px] text-stone-600 italic bg-amber-50/70 p-1.5 rounded border-l-2 border-amber-600">Info: ${item.info}</div>
+                `;
+                listEl.appendChild(card);
+            });
+        }
+
+        window.editQuestionInForm = function(idx) {
+            const item = triviaDatabase[idx];
+            if (!item) return;
+            document.getElementById('qb-edit-index').value = idx;
+            document.getElementById('qb-form-title').innerText = `✏️ Edit Soal #${idx + 1}`;
+            document.getElementById('qb-cancel-edit-btn').classList.remove('hidden');
+
+            document.getElementById('qb-difficulty').value = normalizeDifficulty(item.difficulty);
+            document.getElementById('qb-question').value = item.q;
+            document.getElementById('qb-opt-0').value = item.options[0] || '';
+            document.getElementById('qb-opt-1').value = item.options[1] || '';
+            document.getElementById('qb-opt-2').value = item.options[2] || '';
+            document.getElementById('qb-opt-3').value = item.options[3] || '';
+            document.getElementById('qb-correct').value = String(item.correct);
+            document.getElementById('qb-info').value = item.info || '';
+        };
+
+        window.resetQuestionForm = function() {
+            document.getElementById('qb-edit-index').value = "-1";
+            document.getElementById('qb-form-title').innerText = "➕ Tambah Soal Baru";
+            document.getElementById('qb-cancel-edit-btn').classList.add('hidden');
+            document.getElementById('qb-difficulty').value = "mudah";
+            document.getElementById('qb-question').value = '';
+            document.getElementById('qb-opt-0').value = '';
+            document.getElementById('qb-opt-1').value = '';
+            document.getElementById('qb-opt-2').value = '';
+            document.getElementById('qb-opt-3').value = '';
+            document.getElementById('qb-correct').value = '0';
+            document.getElementById('qb-info').value = '';
+        };
+
+        window.saveQuestionFromForm = function() {
+            const diffVal = normalizeDifficulty(document.getElementById('qb-difficulty').value);
+            const qText = document.getElementById('qb-question').value.trim();
+            const o0 = document.getElementById('qb-opt-0').value.trim();
+            const o1 = document.getElementById('qb-opt-1').value.trim();
+            const o2 = document.getElementById('qb-opt-2').value.trim();
+            const o3 = document.getElementById('qb-opt-3').value.trim();
+            const correctIdx = parseInt(document.getElementById('qb-correct').value, 10);
+            const infoText = document.getElementById('qb-info').value.trim() || "Fakta sejarah masa Orde Baru (1966–1998).";
+
+            if (!qText || !o0 || !o1 || !o2 || !o3) {
+                showQbStatus("Harap isi pertanyaan dan seluruh pilihan A, B, C, D!", true);
+                return;
+            }
+
+            const editIdx = parseInt(document.getElementById('qb-edit-index').value, 10);
+            const existingTag = (editIdx >= 0 && triviaDatabase[editIdx]) ? triviaDatabase[editIdx].crisisTag : undefined;
+
+            const newEntry = {
+                difficulty: diffVal,
+                q: qText,
+                options: [o0, o1, o2, o3],
+                correct: correctIdx,
+                info: infoText
+            };
+            if (existingTag) newEntry.crisisTag = existingTag;
+
+            if (editIdx >= 0 && editIdx < triviaDatabase.length) {
+                triviaDatabase[editIdx] = newEntry;
+                showQbStatus(`Soal #${editIdx + 1} berhasil diperbarui!`);
+            } else {
+                triviaDatabase.unshift(newEntry);
+                showQbStatus("Soal baru berhasil ditambahkan ke Bank Soal!");
+            }
+
+            usedTriviaIndices = [];
+            persistTriviaDatabase();
+            window.resetQuestionForm();
+            renderQuestionBankList();
+        };
+
+        window.deleteQuestionFromBank = function(idx) {
+            const targetItem = triviaDatabase[idx];
+            if (!targetItem) return;
+            const sameLevelCount = triviaDatabase.filter(q => q.difficulty === targetItem.difficulty).length;
+            if (sameLevelCount <= 1) {
+                showQbStatus(`Minimal harus tersisa 1 soal pada tingkat ${DIFFICULTY_META[targetItem.difficulty].label}!`, true);
+                return;
+            }
+            triviaDatabase.splice(idx, 1);
+            usedTriviaIndices = [];
+            persistTriviaDatabase();
+            window.resetQuestionForm();
+            renderQuestionBankList();
+            showQbStatus("Soal berhasil dihapus.");
+        };
+
+        window.resetDefaultTrivia = function() {
+            triviaDatabase = JSON.parse(JSON.stringify(defaultTriviaDatabase));
+            usedTriviaIndices = [];
+            persistTriviaDatabase();
+            window.resetQuestionForm();
+            renderQuestionBankList();
+            showQbStatus("Bank Soal dikembalikan ke 30 soal bawaan (10 Mudah, 10 Sedang, 10 Sulit)!");
+        };
+
+        // Initialize setup inputs
+        function initSetup() {
+            loadTriviaDatabase();
+            window.setPlayerCount(1);
+        }
+
+        window.setPlayerCount = function(count) {
+            for (let i = 0; i < 4; i++) {
+                const existingInput = document.getElementById(`p-name-${i}`);
+                if (existingInput && existingInput.value.trim() !== "") {
+                    savedNames[i] = existingInput.value;
+                }
+            }
+
+            playerCount = count;
+            document.querySelectorAll('.player-count-btn').forEach(btn => {
+                if (parseInt(btn.dataset.count, 10) === count) {
+                    btn.className = "player-count-btn py-2.5 rounded font-bold border-2 border-[#5c4033] bg-amber-200 text-stone-900 transition shadow-sm text-xs md:text-sm cursor-pointer";
+                } else {
+                    btn.className = "player-count-btn py-2.5 rounded font-bold border-2 border-[#5c4033] bg-white text-stone-900 transition hover:bg-amber-100 shadow-sm text-xs md:text-sm cursor-pointer";
+                }
+            });
+
+            const botBox = document.getElementById('bot-option-container');
+            if (count === 1) {
+                botBox.classList.remove('hidden');
+            } else {
+                botBox.classList.add('hidden');
+            }
+
+            const container = document.getElementById('player-inputs');
+            container.innerHTML = '';
+            for (let i = 0; i < count; i++) {
+                const rowDiv = document.createElement('div');
+                rowDiv.className = 'flex items-center gap-3';
+
+                const labelSpan = document.createElement('label');
+                labelSpan.htmlFor = `p-name-${i}`;
+                labelSpan.className = 'w-28 text-xs md:text-sm font-bold text-stone-700 flex items-center gap-1.5 cursor-pointer shrink-0';
+                labelSpan.innerHTML = `<span class="w-3.5 h-3.5 rounded-full inline-block ${playerColors[i].bg} border border-stone-700"></span> Pemain ${i + 1}:`;
+
+                const inputEl = document.createElement('input');
+                inputEl.type = 'text';
+                inputEl.id = `p-name-${i}`;
+                inputEl.name = `player_name_${i}`;
+                inputEl.value = savedNames[i] || `Pemain ${i + 1}`;
+                inputEl.placeholder = `Ketik nama Pemain ${i + 1}...`;
+                inputEl.maxLength = 18;
+                inputEl.autocomplete = 'off';
+                inputEl.className = 'flex-grow p-2.5 rounded border-2 border-[#8c6d53] bg-white text-stone-900 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-[#3d2817] relative z-10';
+                inputEl.addEventListener('input', (e) => {
+                    savedNames[i] = e.target.value;
+                });
+
+                rowDiv.appendChild(labelSpan);
+                rowDiv.appendChild(inputEl);
+                container.appendChild(rowDiv);
+            }
+        };
+
+        window.openSetupScreen = function() {
+            isRolling = false;
+            pendingSnakeChallenge = null;
+            document.getElementById('winner-modal').classList.add('hidden');
+            document.getElementById('trivia-modal').classList.add('hidden');
+            document.getElementById('game-screen').classList.add('hidden');
+            document.getElementById('header-reset-wrap').classList.add('hidden');
+            document.getElementById('setup-screen').classList.remove('hidden');
+            window.setPlayerCount(playerCount);
+        };
+
+        window.startGame = function() {
+            players = [];
+            for (let i = 0; i < playerCount; i++) {
+                const inputEl = document.getElementById(`p-name-${i}`);
+                const rawName = inputEl ? inputEl.value.trim() : "";
+                const finalName = rawName !== "" ? rawName : `Pemain ${i + 1}`;
+                savedNames[i] = finalName;
+
+                players.push({
+                    id: i,
+                    name: finalName,
+                    position: 1,
+                    color: playerColors[i],
+                    isBot: false
+                });
+            }
+
+            if (playerCount === 1) {
+                players.push({
+                    id: 1,
+                    name: "Sejarawan AI",
+                    position: 1,
+                    color: playerColors[1],
+                    isBot: true
+                });
+            }
+
+            currentPlayerIndex = 0;
+            isRolling = false;
+            pendingSnakeChallenge = null;
+            usedTriviaIndices = [];
+            document.getElementById('roll-btn').disabled = false;
+
+            document.getElementById('setup-screen').classList.add('hidden');
+            document.getElementById('game-screen').classList.remove('hidden');
+            document.getElementById('header-reset-wrap').classList.remove('hidden');
+
+            buildBoard();
+            drawSnakesAndLadders();
+            renderTokens();
+            updateUI();
+
+            const logContainer = document.getElementById('game-log');
+            logContainer.innerHTML = `<div class="p-2 bg-amber-50 rounded border-l-2 border-[#8c6d53]">Permainan dimulai dari petak <strong>1 (MULAI)</strong>. Giliran pertama: <strong>${players[0].name}</strong>.</div>`;
+        };
+
+        function getTileCenterCoords(num, forOverlay = false) {
+            const zeroBased = num - 1;
+            const rowFromBottom = Math.floor(zeroBased / 10);
+            const colInRow = zeroBased % 10;
+            
+            const col = (rowFromBottom % 2 === 0) ? colInRow : (9 - colInRow);
+            const visualRow = 9 - rowFromBottom;
+
+            const x = col * 100 + 50;
+            const y = visualRow * 100 + (forOverlay ? 68 : 58);
+            return { x, y, visualRow, col };
+        }
+
+        function buildBoard() {
+            const boardGrid = document.getElementById('board-grid');
+            const labelsLayer = document.getElementById('board-labels-layer');
+            boardGrid.innerHTML = '';
+            labelsLayer.innerHTML = '';
+
+            for (let visualRow = 0; visualRow < 10; visualRow++) {
+                const rowFromBottom = 9 - visualRow;
+                for (let col = 0; col < 10; col++) {
+                    let tileNum;
+                    if (rowFromBottom % 2 === 0) {
+                        tileNum = rowFromBottom * 10 + col + 1;
+                    } else {
+                        tileNum = rowFromBottom * 10 + (10 - col);
+                    }
+
+                    const isTerracotta = (visualRow + col) % 2 === 1;
+                    
+                    const tileEl = document.createElement('div');
+                    tileEl.id = `tile-${tileNum}`;
+                    tileEl.className = `relative border border-[#4a3525]/40 select-none overflow-hidden transition-shadow ${isTerracotta ? 'tile-terracotta' : 'tile-cream'}`;
+                    boardGrid.appendChild(tileEl);
+
+                    const labelCell = document.createElement('div');
+                    labelCell.className = 'relative flex flex-col justify-between p-1.5 select-none overflow-hidden h-full w-full';
+
+                    let topHtml = `<div class="flex justify-between items-start w-full leading-none p-0.5">
+                        <span class="text-[11px] sm:text-[12px] font-bold ${isTerracotta ? 'text-amber-100/95' : 'text-stone-800'}">${tileNum}</span>`;
+                    
+                    if (triviaBlocks.includes(tileNum)) {
+                        topHtml += `<span class="text-xs sm:text-sm opacity-100 filter drop-shadow-xs" title="Uji Sejarah Orde Baru">📖</span>`;
+                    }
+                    topHtml += `</div>`;
+
+                    let centerHtml = '';
+                    if (tileNum === 1) {
+                        centerHtml = `<div class="mt-auto text-center leading-tight pb-0.5">
+                            <span class="inline-block text-[7px] sm:text-[8px] font-bold tracking-wider uppercase px-1 rounded bg-[#3d2817] text-amber-200">MULAI</span>
+                        </div>`;
+                    } else if (tileNum === 100) {
+                        centerHtml = `<div class="mt-auto text-center leading-tight pb-0.5">
+                            <span class="inline-block text-[7px] sm:text-[8px] font-bold tracking-wider uppercase px-1 rounded bg-amber-300 text-[#3d2817]">FINISH</span>
+                        </div>`;
+                    } else if (triviaBlocks.includes(tileNum)) {
+                        centerHtml = `<div class="mt-auto text-center leading-tight pb-0.5">
+                            <span class="inline-block text-[7px] sm:text-[8px] font-bold uppercase px-1 rounded bg-amber-200 text-stone-900 shadow-2xs">SOAL</span>
+                        </div>`;
+                    }
+
+                    labelCell.innerHTML = topHtml + centerHtml;
+                    labelsLayer.appendChild(labelCell);
+                }
+            }
+        }
+
+        function getSnakeGeometry(headNum, tailNum, idx) {
+            const head = getTileCenterCoords(headNum, true);
+            const tail = getTileCenterCoords(tailNum, true);
+            const dx = tail.x - head.x;
+            const dy = tail.y - head.y;
+            const len = Math.hypot(dx, dy);
+            const ux = dx / len;
+            const uy = dy / len;
+            const nx = -uy;
+            const ny = ux;
+
+            const waveAmp = Math.min(48, len * 0.18) * (idx % 2 === 0 ? 1 : -1);
+            const cp1 = {
+                x: head.x + dx * 0.32 + nx * waveAmp,
+                y: head.y + dy * 0.32 + ny * waveAmp
+            };
+            const cp2 = {
+                x: head.x + dx * 0.68 - nx * waveAmp,
+                y: head.y + dy * 0.68 - ny * waveAmp
+            };
+            return { head, tail, cp1, cp2 };
+        }
+
+        function getCubicBezierPoint(t, p0, p1, p2, p3) {
+            const u = 1 - t;
+            const tt = t * t;
+            const uu = u * u;
+            const uuu = uu * u;
+            const ttt = tt * t;
+            return {
+                x: uuu * p0.x + 3 * uu * t * p1.x + 3 * u * tt * p2.x + ttt * p3.x,
+                y: uuu * p0.y + 3 * uu * t * p1.y + 3 * u * tt * p2.y + ttt * p3.y
+            };
+        }
+
+        function drawSnakesAndLadders() {
+            const svg = document.getElementById('board-svg-overlay');
+            let svgContent = `
+                <defs>
+                    <linearGradient id="woodRail" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#4e2a14"/>
+                        <stop offset="45%" stop-color="#9c5d2e"/>
+                        <stop offset="100%" stop-color="#3b1d0c"/>
+                    </linearGradient>
+                    <linearGradient id="woodRung" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="#b57440"/>
+                        <stop offset="100%" stop-color="#5c3216"/>
+                    </linearGradient>
+                </defs>
+            `;
+
+            Object.entries(ladders).forEach(([startStr, data]) => {
+                const startNum = parseInt(startStr, 10);
+                const endNum = data.to;
+                const p1 = getTileCenterCoords(startNum, true);
+                const p2 = getTileCenterCoords(endNum, true);
+
+                const dx = p2.x - p1.x;
+                const dy = p2.y - p1.y;
+                const len = Math.hypot(dx, dy);
+                const ux = dx / len;
+                const uy = dy / len;
+
+                const halfWidth = 10;
+                const px = -uy * halfWidth;
+                const py = ux * halfWidth;
+
+                const r1Start = { x: p1.x + px, y: p1.y + py };
+                const r1End   = { x: p2.x + px, y: p2.y + py };
+                const r2Start = { x: p1.x - px, y: p1.y - py };
+                const r2End   = { x: p2.x - px, y: p2.y - py };
+
+                const numRungs = Math.max(3, Math.floor(len / 30));
+                for (let i = 1; i < numRungs; i++) {
+                    const t = i / numRungs;
+                    const rx1 = r1Start.x + (r1End.x - r1Start.x) * t;
+                    const ry1 = r1Start.y + (r1End.y - r1Start.y) * t;
+                    const rx2 = r2Start.x + (r2End.x - r2Start.x) * t;
+                    const ry2 = r2Start.y + (r2End.y - r2Start.y) * t;
+
+                    svgContent += `
+                        <line x1="${rx1}" y1="${ry1}" x2="${rx2}" y2="${ry2}" stroke="#2b1407" stroke-width="5.5" stroke-linecap="round"/>
+                        <line x1="${rx1}" y1="${ry1}" x2="${rx2}" y2="${ry2}" stroke="url(#woodRung)" stroke-width="3.5" stroke-linecap="round"/>
+                    `;
+                }
+
+                svgContent += `
+                    <line x1="${r1Start.x}" y1="${r1Start.y}" x2="${r1End.x}" y2="${r1End.y}" stroke="#2b1407" stroke-width="7" stroke-linecap="round"/>
+                    <line x1="${r1Start.x}" y1="${r1Start.y}" x2="${r1End.x}" y2="${r1End.y}" stroke="url(#woodRail)" stroke-width="4.5" stroke-linecap="round"/>
+                    
+                    <line x1="${r2Start.x}" y1="${r2Start.y}" x2="${r2End.x}" y2="${r2End.y}" stroke="#2b1407" stroke-width="7" stroke-linecap="round"/>
+                    <line x1="${r2Start.x}" y1="${r2Start.y}" x2="${r2End.x}" y2="${r2End.y}" stroke="url(#woodRail)" stroke-width="4.5" stroke-linecap="round"/>
+                `;
+            });
+
+            const snakePalettes = [
+                { body: "#658a2f", dash: "#fef08a" },
+                { body: "#b93825", dash: "#fef08a" }
+            ];
+
+            Object.entries(snakes).forEach(([headStr, data], idx) => {
+                const headNum = parseInt(headStr, 10);
+                const tailNum = data.to;
+                const { head, tail, cp1, cp2 } = getSnakeGeometry(headNum, tailNum, idx);
+                const palette = snakePalettes[idx % snakePalettes.length];
+
+                const fullPathD = `M ${head.x} ${head.y} C ${cp1.x} ${cp1.y}, ${cp2.x} ${cp2.y}, ${tail.x} ${tail.y}`;
+
+                svgContent += `
+                    <path d="${fullPathD}" fill="none" stroke="#2b1407" stroke-width="11" stroke-linecap="round"/>
+                    <path d="${fullPathD}" fill="none" stroke="${palette.body}" stroke-width="8" stroke-linecap="round"/>
+                    <path d="${fullPathD}" fill="none" stroke="${palette.dash}" stroke-width="3.2" stroke-dasharray="10 10" stroke-linecap="round"/>
+                `;
+
+                const neckAngle = Math.atan2(head.y - cp1.y, head.x - cp1.x) * (180 / Math.PI);
+
+                svgContent += `
+                    <g transform="translate(${head.x}, ${head.y}) rotate(${neckAngle})">
+                        <path d="M 12 0 L 18 -4 M 16 -1.8 L 18 4" stroke="#dc2626" stroke-width="2.2" stroke-linecap="round"/>
+                        <ellipse cx="1" cy="0" rx="10" ry="7.5" fill="${palette.body}" stroke="#2b1407" stroke-width="1.4"/>
+                        <circle cx="3" cy="-3.5" r="2.2" fill="#fef08a" stroke="#1c1917" stroke-width="0.6"/>
+                        <circle cx="3" cy="3.5" r="2.2" fill="#fef08a" stroke="#1c1917" stroke-width="0.6"/>
+                    </g>
+                `;
+            });
+
+            svg.innerHTML = svgContent;
+        }
+
+        function renderTokens() {
+            const layer = document.getElementById('board-tokens-layer');
+            layer.innerHTML = '';
+
+            const posGroups = {};
+            players.forEach((p, idx) => {
+                if (!posGroups[p.position]) posGroups[p.position] = [];
+                posGroups[p.position].push({ player: p, idx });
+            });
+
+            Object.entries(posGroups).forEach(([posStr, group]) => {
+                const pos = parseInt(posStr, 10);
+                const coords = getTileCenterCoords(pos);
+                const leftPct = (coords.x / 1000) * 100;
+                const topPct = (coords.y / 1000) * 100;
+
+                group.forEach((item, subIdx) => {
+                    const offsetAngle = (subIdx / group.length) * Math.PI * 2;
+                    const offsetRadius = group.length > 1 ? 1.8 : 0;
+                    const dx = Math.cos(offsetAngle) * offsetRadius;
+                    const dy = Math.sin(offsetAngle) * offsetRadius;
+
+                    const token = document.createElement('div');
+                    token.id = `player-token-${item.idx}`;
+                    token.style.left = `calc(${leftPct + dx}% - 15px)`;
+                    token.style.top = `calc(${topPct + dy}% - 15px)`;
+                    token.className = `absolute w-[30px] h-[30px] flex items-center justify-center transition-all duration-75 ${item.idx === currentPlayerIndex ? 'active-token z-30 filter drop-shadow-[0_4px_6px_rgba(251,191,36,0.8)]' : 'z-20 filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]'}`;
+                    
+                    const shapeSvg = item.player.isBot ? pawnSvgShapes[1] : (pawnSvgShapes[item.idx % pawnSvgShapes.length]);
+
+                    token.innerHTML = `
+                        <svg viewBox="0 0 24 24" class="w-full h-full" fill="${item.player.color.fill}" stroke="#1c1917" stroke-width="1.2" stroke-linejoin="round">
+                            ${shapeSvg}
+                            <ellipse cx="12" cy="21" rx="7" ry="1.5" fill="#1c1917" opacity="0.35"/>
+                        </svg>
+                        <span class="absolute inset-0 flex items-center justify-center text-[9px] font-black text-white pb-1 select-none pointer-events-none drop-shadow-[0_1px_1px_rgba(0,0,0,0.9)]">
+                            ${item.player.isBot ? '🤖' : item.player.name.charAt(0).toUpperCase()}
+                        </span>
+                    `;
+                    token.title = `${item.player.name} (Petak ${item.player.position})`;
+                    layer.appendChild(token);
+                });
+            });
+        }
+
+        function easeInOutCubic(t) {
+            return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+        }
+
+        // Smooth continuous token glide animation across multiple steps without stopping abruptly
+        function animateTokenAlongPath(playerIdx, pathPositions, onComplete) {
+            const tokenEl = document.getElementById(`player-token-${playerIdx}`);
+            if (!tokenEl || pathPositions.length < 2) {
+                onComplete();
+                return;
+            }
+
+            tokenEl.classList.add('pawn-gliding');
+            
+            // Build full smooth trajectory points for all steps combined for absolute silky fluidity
+            const fullTrajectory = [];
+            for (let i = 0; i < pathPositions.length - 1; i++) {
+                const startCoords = getTileCenterCoords(pathPositions[i], false);
+                const endCoords = getTileCenterCoords(pathPositions[i + 1], false);
+                const subSteps = 18; // Sub-steps per tile jump for buttery smoothness
+                for (let s = 0; s < subSteps; s++) {
+                    const t = s / subSteps;
+                    const easedT = easeInOutCubic(t);
+                    fullTrajectory.push({
+                        x: startCoords.x + (endCoords.x - startCoords.x) * easedT,
+                        y: startCoords.y + (endCoords.y - startCoords.y) * easedT,
+                        tilePos: pathPositions[i + 1]
+                    });
+                }
+            }
+
+            const finalTargetCoords = getTileCenterCoords(pathPositions[pathPositions.length - 1], false);
+            fullTrajectory.push({ x: finalTargetCoords.x, y: finalTargetCoords.y, tilePos: pathPositions[pathPositions.length - 1] });
+
+            const totalDuration = Math.min(1800, pathPositions.length * 280);
+            const startTime = performance.now();
+
+            function frame(now) {
+                const elapsed = now - startTime;
+                const rawProgress = Math.min(1, elapsed / totalDuration);
+                const smoothProgress = easeInOutCubic(rawProgress);
+
+                const targetIndex = Math.min(fullTrajectory.length - 1, Math.floor(smoothProgress * (fullTrajectory.length - 1)));
+                const currentPoint = fullTrajectory[targetIndex];
+
+                if (currentPoint) {
+                    const leftPct = (currentPoint.x / 1000) * 100;
+                    const topPct = (currentPoint.y / 1000) * 100;
+                    tokenEl.style.left = `calc(${leftPct}% - 15px)`;
+                    tokenEl.style.top = `calc(${topPct}% - 15px)`;
+                }
+
+                if (rawProgress < 1) {
+                    requestAnimationFrame(frame);
+                } else {
+                    tokenEl.classList.remove('pawn-gliding');
+                    players[playerIdx].position = pathPositions[pathPositions.length - 1];
+                    renderTokens();
+                    updateUI();
+                    onComplete();
+                }
+            }
+
+            requestAnimationFrame(frame);
+        }
+
+        function animateSpecialGlide(playerIdx, fromPos, toPos, isSnake, snakeGeom, onComplete) {
+            const tokenEl = document.getElementById(`player-token-${playerIdx}`);
+            const targetTileEl = document.getElementById(`tile-${toPos}`);
+            if (targetTileEl) targetTileEl.classList.add('tile-highlight-target');
+
+            if (!tokenEl) {
+                if (targetTileEl) targetTileEl.classList.remove('tile-highlight-target');
+                onComplete();
+                return;
+            }
+
+            tokenEl.style.transition = 'none';
+            tokenEl.classList.add('pawn-gliding');
+
+            const startCoords = getTileCenterCoords(fromPos, false);
+            const endCoords = getTileCenterCoords(toPos, false);
+            const duration = isSnake ? 1150 : 950;
+            const startTime = performance.now();
+
+            function step(now) {
+                const elapsed = now - startTime;
+                const rawT = Math.min(1, elapsed / duration);
+                const easedT = easeInOutCubic(rawT);
+
+                let curX, curY;
+                if (isSnake && snakeGeom) {
+                    const pt = getCubicBezierPoint(easedT, snakeGeom.head, snakeGeom.cp1, snakeGeom.cp2, snakeGeom.tail);
+                    curX = pt.x;
+                    curY = pt.y;
+                } else {
+                    curX = startCoords.x + (endCoords.x - startCoords.x) * easedT;
+                    curY = startCoords.y + (endCoords.y - startCoords.y) * easedT;
+                }
+
+                const leftPct = (curX / 1000) * 100;
+                const topPct = (curY / 1000) * 100;
+                tokenEl.style.left = `calc(${leftPct}% - 15px)`;
+                tokenEl.style.top = `calc(${topPct}% - 15px)`;
+
+                if (rawT < 1) {
+                    requestAnimationFrame(step);
+                } else {
+                    tokenEl.classList.remove('pawn-gliding');
+                    if (targetTileEl) {
+                        setTimeout(() => targetTileEl.classList.remove('tile-highlight-target'), 450);
+                    }
+                    onComplete();
+                }
+            }
+
+            requestAnimationFrame(step);
+        }
+
+        function updateUI() {
+            const cp = players[currentPlayerIndex];
+            document.getElementById('current-player-name').innerText = cp.name;
+            
+            const badge = document.getElementById('turn-badge');
+            badge.innerText = cp.isBot ? "Giliran Sejarawan AI" : `Giliran ${cp.name}`;
+            badge.className = `px-2.5 py-0.5 rounded text-xs font-bold border ${cp.color.badge}`;
+
+            const standingsContainer = document.getElementById('player-standings');
+            standingsContainer.innerHTML = '';
+            players.forEach((p, idx) => {
+                standingsContainer.innerHTML += `
+                    <div class="flex justify-between items-center text-xs p-2 rounded ${idx === currentPlayerIndex ? 'bg-amber-100 border border-amber-400 font-bold shadow-xs' : 'bg-white border border-stone-200'}">
+                        <div class="flex items-center gap-2">
+                            <span class="w-3.5 h-3.5 rounded-full ${p.color.bg} inline-block border border-stone-700"></span>
+                            <span>${p.name}</span>
+                        </div>
+                        <span class="bg-stone-100 px-2 py-0.5 rounded font-mono border border-stone-300">Petak ${p.position}/100</span>
+                    </div>
+                `;
+            });
+        }
+
+        function addLog(text) {
+            const logContainer = document.getElementById('game-log');
+            logContainer.innerHTML += `<div class="p-2 bg-amber-50 rounded border-l-2 border-[#8c6d53] leading-snug">${text}</div>`;
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        window.rollDice = function() {
+            if (isRolling) return;
+            isRolling = true;
+            document.getElementById('roll-btn').disabled = true;
+            playSound('dice');
+
+            let rollAnimationCount = 0;
+            const diceBox = document.getElementById('dice-box');
+            diceBox.classList.add('dice-rolling');
+
+            const diceFaceSvgs = [
+                `<rect x="2" y="2" width="20" height="20" rx="3" fill="#fefbf6"/><circle cx="12" cy="12" r="2.2" fill="#2b1b11"/>`,
+                `<rect x="2" y="2" width="20" height="20" rx="3" fill="#fefbf6"/><circle cx="7" cy="7" r="1.8" fill="#2b1b11"/><circle cx="17" cy="17" r="1.8" fill="#2b1b11"/>`,
+                `<rect x="2" y="2" width="20" height="20" rx="3" fill="#fefbf6"/><circle cx="7" cy="7" r="1.8" fill="#2b1b11"/><circle cx="12" cy="12" r="1.8" fill="#2b1b11"/><circle cx="17" cy="17" r="1.8" fill="#2b1b11"/>`,
+                `<rect x="2" y="2" width="20" height="20" rx="3" fill="#fefbf6"/><circle cx="7" cy="7" r="1.8" fill="#2b1b11"/><circle cx="17" cy="7" r="1.8" fill="#2b1b11"/><circle cx="7" cy="17" r="1.8" fill="#2b1b11"/><circle cx="17" cy="17" r="1.8" fill="#2b1b11"/>`,
+                `<rect x="2" y="2" width="20" height="20" rx="3" fill="#fefbf6"/><circle cx="7" cy="7" r="1.8" fill="#2b1b11"/><circle cx="17" cy="7" r="1.8" fill="#2b1b11"/><circle cx="12" cy="12" r="1.8" fill="#2b1b11"/><circle cx="7" cy="17" r="1.8" fill="#2b1b11"/><circle cx="17" cy="17" r="1.8" fill="#2b1b11"/>`,
+                `<rect x="2" y="2" width="20" height="20" rx="3" fill="#fefbf6"/><circle cx="7" cy="6" r="1.6" fill="#2b1b11"/><circle cx="17" cy="6" r="1.6" fill="#2b1b11"/><circle cx="7" cy="12" r="1.6" fill="#2b1b11"/><circle cx="17" cy="12" r="1.6" fill="#2b1b11"/><circle cx="7" cy="18" r="1.6" fill="#2b1b11"/><circle cx="17" cy="18" r="1.6" fill="#2b1b11"/>`
+            ];
+
+            const animInterval = setInterval(() => {
+                const randomFace = Math.floor(Math.random() * 6);
+                const svgIcon = document.getElementById('dice-svg-icon');
+                if (svgIcon) svgIcon.innerHTML = diceFaceSvgs[randomFace];
+                rollAnimationCount++;
+
+                if (rollAnimationCount > 10) {
+                    clearInterval(animInterval);
+                    diceBox.classList.remove('dice-rolling');
+                    const finalRoll = Math.floor(Math.random() * 6) + 1;
+                    const svgIconFinal = document.getElementById('dice-svg-icon');
+                    if (svgIconFinal) svgIconFinal.innerHTML = diceFaceSvgs[finalRoll - 1];
+                    
+                    processMoveStepByStep(finalRoll);
+                }
+            }, 65);
+        };
+
+        function processMoveStepByStep(roll) {
+            const cp = players[currentPlayerIndex];
+            addLog(`🎲 <strong>${cp.name}</strong> mengocok dadu dan mendapat angka <strong>${roll}</strong>.`);
+
+            let stepsRemaining = roll;
+            let direction = 1;
+            let tempPos = cp.position;
+            const pathArr = [tempPos];
+
+            while (stepsRemaining > 0) {
+                if (direction === 1) {
+                    if (tempPos < 100) {
+                        tempPos++;
+                    } else {
+                        direction = -1;
+                        tempPos--;
+                    }
+                } else {
+                    tempPos--;
+                }
+                pathArr.push(tempPos);
+                stepsRemaining--;
+            }
+
+            animateTokenAlongPath(currentPlayerIndex, pathArr, () => {
+                checkTileEvents(cp, cp.position);
+            });
+        }
+
+        function checkTileEvents(cp, currentPos) {
+            if (currentPos === 100) {
+                playSound('success');
+                triggerVictory(cp);
+                return;
+            }
+
+            if (ladders[currentPos]) {
+                const ladderData = ladders[currentPos];
+                playSound('ladder');
+                addLog(`🪜 <strong>Tangga Pembangunan (${ladderData.label})!</strong> ${cp.name} naik dari petak ${currentPos} ke petak <strong>${ladderData.to}</strong>.`);
+                
+                animateSpecialGlide(currentPlayerIndex, currentPos, ladderData.to, false, null, () => {
+                    cp.position = ladderData.to;
+                    renderTokens();
+                    updateUI();
+                    if (ladderData.to === 100) {
+                        playSound('success');
+                        triggerVictory(cp);
+                        return;
+                    }
+                    endTurn();
+                });
+                return;
+            } else if (snakes[currentPos]) {
+                const snakeData = snakes[currentPos];
+                const snakeKeys = Object.keys(snakes);
+                const snakeIdx = snakeKeys.indexOf(String(currentPos));
+                const geom = getSnakeGeometry(currentPos, snakeData.to, Math.max(0, snakeIdx));
+
+                if (cp.isBot) {
+                    const botSaved = Math.random() < 0.35;
+                    if (botSaved) {
+                        playSound('success');
+                        addLog(`🛡️ <strong>${cp.name}</strong> berhasil menjawab soal sulit Ular Krisis (${snakeData.label}) dan bertahan di petak <strong>${currentPos}</strong>!`);
+                        endTurn();
+                    } else {
+                        playSound('snake');
+                        addLog(`🐍 <strong>Ular Krisis (${snakeData.label})!</strong> ${cp.name} gagal menjawab soal sulit dan turun dari petak ${currentPos} ke petak <strong>${snakeData.to}</strong>.`);
+                        animateSpecialGlide(currentPlayerIndex, currentPos, snakeData.to, true, geom, () => {
+                            cp.position = snakeData.to;
+                            renderTokens();
+                            updateUI();
+                            endTurn();
+                        });
+                    }
+                } else {
+                    triggerSnakeCrisisChallenge(cp, currentPos, snakeData, geom);
+                }
+                return;
+            } else if (triviaBlocks.includes(currentPos)) {
+                if (cp.isBot) {
+                    const levels = ["mudah", "sedang", "sulit"];
+                    const chosenLevel = levels[Math.floor(Math.random() * levels.length)];
+                    const meta = DIFFICULTY_META[chosenLevel];
+                    const winChance = chosenLevel === "mudah" ? 0.75 : (chosenLevel === "sedang" ? 0.55 : 0.35);
+                    const botCorrect = Math.random() < winChance;
+
+                    if (botCorrect) {
+                        cp.position = Math.min(100, cp.position + meta.steps);
+                        addLog(`🤖 <strong>${cp.name}</strong> memilih soal Uji Sejarah tingkat <strong>${meta.label}</strong> dan menjawab benar! Bonus maju <strong>+${meta.steps}</strong> ke petak <strong>${cp.position}</strong>.`);
+                    } else {
+                        cp.position = Math.max(1, cp.position - meta.steps);
+                        addLog(`🤖 <strong>${cp.name}</strong> memilih soal tingkat <strong>${meta.label}</strong> namun keliru menjawab. Mundur <strong>-${meta.steps}</strong> ke petak <strong>${cp.position}</strong>.`);
+                    }
+                    renderTokens();
+                    updateUI();
+                    if (cp.position === 100) {
+                        triggerVictory(cp);
+                        return;
+                    }
+                    endTurn();
+                } else {
+                    triggerTrivia(cp);
+                }
+                return;
+            }
+
+            endTurn();
+        }
+
+        function getNextTriviaQuestion(difficulty = "mudah", preferredTag = null) {
+            let candidateIndices = [];
+            triviaDatabase.forEach((item, idx) => {
+                if (item.difficulty === difficulty) {
+                    candidateIndices.push(idx);
+                }
+            });
+
+            if (candidateIndices.length === 0) {
+                candidateIndices = triviaDatabase.map((_, idx) => idx);
+            }
+
+            if (preferredTag) {
+                const taggedUnused = candidateIndices.filter(idx => triviaDatabase[idx].crisisTag === preferredTag && !usedTriviaIndices.includes(idx));
+                if (taggedUnused.length > 0) {
+                    const chosen = taggedUnused[0];
+                    usedTriviaIndices.push(chosen);
+                    return triviaDatabase[chosen];
+                }
+            }
+
+            let available = candidateIndices.filter(idx => !usedTriviaIndices.includes(idx));
+            if (available.length === 0) {
+                usedTriviaIndices = usedTriviaIndices.filter(idx => !candidateIndices.includes(idx));
+                available = candidateIndices;
+            }
+
+            const chosenIdx = available[Math.floor(Math.random() * available.length)];
+            usedTriviaIndices.push(chosenIdx);
+            return triviaDatabase[chosenIdx];
+        }
+
+        function renderQuestionIntoModal(questionObj, difficultyLevel) {
+            activeTriviaItem = questionObj;
+            activeDifficulty = difficultyLevel;
+            const meta = DIFFICULTY_META[difficultyLevel] || DIFFICULTY_META.mudah;
+
+            const diffBadge = document.getElementById('trivia-diff-badge');
+            diffBadge.className = `text-xs font-bold px-2 py-1 rounded uppercase tracking-wider border ${meta.badgeClass}`;
+            diffBadge.innerText = pendingSnakeChallenge
+                ? `${meta.icon} Tingkat Sulit (Penyelamat)`
+                : `${meta.icon} ${meta.label} (±${meta.steps} Petak)`;
+            diffBadge.classList.remove('hidden');
+
+            document.getElementById('difficulty-selector-panel').classList.add('hidden');
+            document.getElementById('trivia-question-panel').classList.remove('hidden');
+            document.getElementById('trivia-question').innerText = questionObj.q;
+
+            const optionsContainer = document.getElementById('trivia-options');
+            optionsContainer.innerHTML = '';
+            questionObj.options.forEach((opt, idx) => {
+                optionsContainer.innerHTML += `
+                    <button type="button" onclick="answerTrivia(${idx})" class="w-full text-left p-3 rounded border border-stone-400 bg-white hover:bg-amber-100 transition text-xs md:text-sm font-medium text-stone-800 shadow-xs cursor-pointer">
+                        <strong>${String.fromCharCode(65 + idx)}.</strong> ${opt}
+                    </button>
+                `;
+            });
+        }
+
+        // Standard Trivia Tile: Player chooses difficulty (Mudah ±2, Sedang ±4, Sulit ±6)
+        function triggerTrivia(cp) {
+            playSound('success');
+            pendingSnakeChallenge = null;
+
+            const cardEl = document.getElementById('trivia-modal-card');
+            cardEl.className = "parchment max-w-lg w-full p-6 rounded-lg shadow-2xl";
+
+            const modeBadge = document.getElementById('trivia-mode-badge');
+            modeBadge.className = "bg-[#8c2d19] text-amber-100 text-xs font-bold px-2.5 py-1 rounded uppercase tracking-wider";
+            modeBadge.innerText = "📖 Uji Sejarah Orde Baru";
+
+            document.getElementById('trivia-diff-badge').classList.add('hidden');
+            document.getElementById('snake-crisis-banner').classList.add('hidden');
+            document.getElementById('trivia-player-tag').innerText = `${cp.name} (Petak ${cp.position})`;
+
+            document.getElementById('difficulty-selector-panel').classList.remove('hidden');
+            document.getElementById('trivia-question-panel').classList.add('hidden');
+            document.getElementById('trivia-feedback').classList.add('hidden');
+            document.getElementById('trivia-close-btn').classList.add('hidden');
+
+            document.getElementById('trivia-modal').classList.remove('hidden');
+            addLog(`📖 <strong>${cp.name}</strong> mendarat di petak <strong>UJI SEJARAH (${cp.position})</strong> dan memilih tingkat kesulitan soal.`);
+        }
+
+        window.selectTriviaDifficulty = function(level) {
+            const normalized = normalizeDifficulty(level);
+            const questionObj = getNextTriviaQuestion(normalized, null);
+            renderQuestionIntoModal(questionObj, normalized);
+        };
+
+        // Snake Head Crisis Challenge: Automatic Hard (HOTS) Question to avoid sliding down
+        function triggerSnakeCrisisChallenge(cp, fromPos, snakeData, geom) {
+            playSound('warning');
+            pendingSnakeChallenge = {
+                fromPos: fromPos,
+                snakeData: snakeData,
+                geom: geom,
+                saved: false
+            };
+
+            const cardEl = document.getElementById('trivia-modal-card');
+            cardEl.className = "parchment-crisis max-w-lg w-full p-6 rounded-lg shadow-2xl";
+
+            const modeBadge = document.getElementById('trivia-mode-badge');
+            modeBadge.className = "bg-rose-800 text-amber-100 text-xs font-bold px-2.5 py-1 rounded uppercase tracking-wider";
+            modeBadge.innerText = "🐍 Tantangan Ular Krisis";
+
+            document.getElementById('trivia-player-tag').innerText = `${cp.name} (Petak ${fromPos} → ${snakeData.to})`;
+
+            const crisisBanner = document.getElementById('snake-crisis-banner');
+            crisisBanner.classList.remove('hidden');
+            document.getElementById('snake-crisis-desc').innerHTML = `Anda mendarat di kepala ular <strong>"${snakeData.label}" (Petak ${fromPos})</strong>! Jawab soal tingkat <strong>SULIT (HOTS)</strong> ini dengan benar untuk selamat, atau meluncur turun ke <strong>Petak ${snakeData.to}</strong>!`;
+
+            document.getElementById('trivia-feedback').classList.add('hidden');
+            document.getElementById('trivia-close-btn').classList.add('hidden');
+
+            const hardQuestion = getNextTriviaQuestion("sulit", snakeData.crisisTag || null);
+            renderQuestionIntoModal(hardQuestion, "sulit");
+
+            document.getElementById('trivia-modal').classList.remove('hidden');
+            addLog(`🐍⚠️ <strong>${cp.name}</strong> bertemu kepala ular <strong>${snakeData.label} (${fromPos})</strong>! Menghadapi soal sulit untuk menyelamatkan diri.`);
+        }
+
+        window.answerTrivia = function(selectedIndex) {
+            const cp = players[currentPlayerIndex];
+            const correct = activeTriviaItem.correct;
+            const feedbackEl = document.getElementById('trivia-feedback');
+            const isCorrect = selectedIndex === correct;
+
+            const buttons = document.querySelectorAll('#trivia-options button');
+            buttons.forEach((btn, idx) => {
+                btn.disabled = true;
+                btn.classList.remove('cursor-pointer');
+                if (idx === correct) {
+                    btn.classList.remove('bg-white', 'hover:bg-amber-100');
+                    btn.classList.add('bg-emerald-200', 'border-emerald-700', 'font-bold', 'text-emerald-950');
+                } else if (idx === selectedIndex) {
+                    btn.classList.remove('bg-white', 'hover:bg-amber-100');
+                    btn.classList.add('bg-rose-200', 'border-rose-700', 'text-rose-950');
+                }
+            });
+
+            feedbackEl.classList.remove('hidden');
+            const closeBtn = document.getElementById('trivia-close-btn');
+
+            if (pendingSnakeChallenge) {
+                if (isCorrect) {
+                    playSound('success');
+                    pendingSnakeChallenge.saved = true;
+                    feedbackEl.className = "text-left p-3.5 rounded text-xs md:text-sm mb-4 bg-emerald-100 text-emerald-950 border border-emerald-500 leading-relaxed";
+                    feedbackEl.innerHTML = `✅ <strong>Luar Biasa, Jawaban Benar!</strong> ${activeTriviaItem.info}<div class="mt-1.5 font-extrabold text-emerald-800">🛡️ Selamat! Anda berhasil menahan krisis dan tetap bertahan di Petak ${pendingSnakeChallenge.fromPos}!</div>`;
+                    addLog(`🛡️ <strong>${cp.name}</strong> menjawab benar soal sulit dan selamat dari ular <strong>${pendingSnakeChallenge.snakeData.label}</strong> di petak <strong>${pendingSnakeChallenge.fromPos}</strong>!`);
+                    closeBtn.innerText = "Bertahan & Lanjutkan Permainan";
+                } else {
+                    playSound('fail');
+                    pendingSnakeChallenge.saved = false;
+                    feedbackEl.className = "text-left p-3.5 rounded text-xs md:text-sm mb-4 bg-rose-100 text-rose-950 border border-rose-500 leading-relaxed";
+                    feedbackEl.innerHTML = `❌ <strong>Jawaban Kurang Tepat.</strong> ${activeTriviaItem.info}<div class="mt-1.5 font-extrabold text-rose-800">🐍 Krisis tak terhindarkan! Pion Anda meluncur turun dari Petak ${pendingSnakeChallenge.fromPos} ke Petak ${pendingSnakeChallenge.snakeData.to}!</div>`;
+                    addLog(`🐍 <strong>${cp.name}</strong> gagal menjawab soal sulit dan meluncur turun dari petak ${pendingSnakeChallenge.fromPos} ke petak <strong>${pendingSnakeChallenge.snakeData.to}</strong>.`);
+                    closeBtn.innerText = "Turun Mengikuti Ular";
+                }
+                closeBtn.classList.remove('hidden');
+            } else {
+                const meta = DIFFICULTY_META[activeDifficulty] || DIFFICULTY_META.mudah;
+                const stepDelta = meta.steps;
+                const startPos = cp.position;
+
+                if (isCorrect) {
+                    playSound('success');
+                    feedbackEl.className = "text-left p-3.5 rounded text-xs md:text-sm mb-4 bg-emerald-100 text-emerald-950 border border-emerald-500 leading-relaxed";
+                    feedbackEl.innerHTML = `✅ <strong>Jawaban Benar (${meta.label})!</strong> ${activeTriviaItem.info}<div class="mt-1.5 font-extrabold text-emerald-800">🎁 Hadiah: Pion maju +${stepDelta} langkah!</div>`;
+
+                    const targetPos = Math.min(100, startPos + stepDelta);
+                    const pathArr = [startPos];
+                    for (let p = startPos + 1; p <= targetPos; p++) pathArr.push(p);
+
+                    addLog(`✅ <strong>${cp.name}</strong> menaklukkan soal tingkat <strong>${meta.label}</strong> dan bergerak maju ke petak <strong>${targetPos}</strong>.`);
+                    
+                    document.getElementById('trivia-modal').classList.add('hidden');
+                    animateTokenAlongPath(currentPlayerIndex, pathArr, () => {
+                        if (cp.position === 100) {
+                            playSound('success');
+                            triggerVictory(cp);
+                        } else {
+                            endTurn();
+                        }
+                    });
+                    return;
+                } else {
+                    playSound('fail');
+                    feedbackEl.className = "text-left p-3.5 rounded text-xs md:text-sm mb-4 bg-rose-100 text-rose-950 border border-rose-500 leading-relaxed";
+                    feedbackEl.innerHTML = `❌ <strong>Jawaban Kurang Tepat (${meta.label}).</strong> ${activeTriviaItem.info}<div class="mt-1.5 font-extrabold text-rose-800">⚠️ Hukuman: Pion mundur -${stepDelta} langkah!</div>`;
+
+                    const targetPos = Math.max(1, startPos - stepDelta);
+                    const pathArr = [startPos];
+                    for (let p = startPos - 1; p >= targetPos; p--) pathArr.push(p);
+
+                    addLog(`❌ <strong>${cp.name}</strong> keliru menjawab soal tingkat <strong>${meta.label}</strong> dan mundur ke petak <strong>${targetPos}</strong>.`);
+
+                    document.getElementById('trivia-modal').classList.add('hidden');
+                    animateTokenAlongPath(currentPlayerIndex, pathArr, () => {
+                        endTurn();
+                    });
+                    return;
+                }
+            }
+        };
+
+        window.closeTriviaModal = function() {
+            document.getElementById('trivia-modal').classList.add('hidden');
+            const cp = players[currentPlayerIndex];
+
+            if (pendingSnakeChallenge) {
+                const challenge = pendingSnakeChallenge;
+                pendingSnakeChallenge = null;
+
+                if (challenge.saved) {
+                    renderTokens();
+                    updateUI();
+                    endTurn();
+                } else {
+                    playSound('snake');
+                    animateSpecialGlide(currentPlayerIndex, challenge.fromPos, challenge.snakeData.to, true, challenge.geom, () => {
+                        cp.position = challenge.snakeData.to;
+                        renderTokens();
+                        updateUI();
+                        endTurn();
+                    });
+                }
+                return;
+            }
+
+            if (cp.position === 100) {
+                playSound('success');
+                triggerVictory(cp);
+            } else {
+                endTurn();
+            }
+        };
+
+        function endTurn() {
+            currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+            isRolling = false;
+            updateUI();
+
+            const nextPlayer = players[currentPlayerIndex];
+            if (nextPlayer.isBot) {
+                document.getElementById('roll-btn').disabled = true;
+                setTimeout(() => {
+                    window.rollDice();
+                }, 900);
+            } else {
+                document.getElementById('roll-btn').disabled = false;
+            }
+        }
+
+        function triggerVictory(cp) {
+            isRolling = false;
+            document.getElementById('winner-message').innerText = `Selamat kepada ${cp.name}! Berhasil menuntaskan perjalanan sejarah Orde Baru dan mencapai puncak petak 100 dengan gemilang.`;
+            document.getElementById('winner-modal').classList.remove('hidden');
+        }
+
+        window.resetGame = function() {
+            window.openSetupScreen();
+        };
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                const activeTag = document.activeElement ? document.activeElement.tagName : '';
+                if (activeTag === 'INPUT' || activeTag === 'TEXTAREA') return;
+
+                const gameScreenVisible = !document.getElementById('game-screen').classList.contains('hidden');
+                const triviaHidden = document.getElementById('trivia-modal').classList.contains('hidden');
+                const winnerHidden = document.getElementById('winner-modal').classList.contains('hidden');
+                const bankHidden = document.getElementById('question-bank-modal').classList.contains('hidden');
+                const rollBtn = document.getElementById('roll-btn');
+
+                if (gameScreenVisible && triviaHidden && winnerHidden && bankHidden && !rollBtn.disabled && !isRolling) {
+                    e.preventDefault();
+                    window.rollDice();
+                }
+            }
+        });
+
+        window.onload = function() {
+            initSetup();
+        };
+    </script>
+</body>
+</html>
